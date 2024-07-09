@@ -20,7 +20,7 @@ class Destinos(db.Model):
     description = db.Column(db.String(32000))
     location = db.Column(db.String(100))
     image_url = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default='2024-06-16 00:0:00')
+    created_at = db.Column(db.DateTime, default='2024-06-16 00:00:00')
 
 
 class Paquetes_turisticos(db.Model):
