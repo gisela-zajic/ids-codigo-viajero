@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-from models import db, Destinos, Paquetes_turisticos, Resenias, Reservas, Usuarios
+from modelos import db, Destinos, Paquetes_turisticos, Resenias, Reservas, Usuarios
 
 app =Flask(__name__)
 port = 5432
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2-binary://postgres:postgresql@localhost:5432/codigo_viajero'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgresql@localhost:5432/codigo_viajero'
 app.config['SQLALCHEMY_TRACK_NOTIFICATIONS']=False
 
 @app.route('/usuarios', methods=['GET'])
