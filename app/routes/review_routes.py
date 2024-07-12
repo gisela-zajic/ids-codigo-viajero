@@ -20,7 +20,6 @@ def get_resenias():
                 'paquete_id': resenia.paquete_id,
                 'user_id': resenia.user_id,
             }
-            # revisar si appendear resenia_data o resenias_data
             resenias_data.append(resenia_data)
         return jsonify({'resenias': resenias_data})
     except Exception as error:
