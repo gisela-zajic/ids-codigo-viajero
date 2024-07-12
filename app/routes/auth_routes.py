@@ -1,0 +1,42 @@
+from flask import Blueprint, request, jsonify
+from app.models.user import Usuarios
+from app import db
+
+auth_bp = Blueprint('auth', __name__)
+
+
+# ruta para registro de usuario
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    try:
+        data = request.get_json()
+        username = data['username']
+        email = data['email']
+        password = data['password']
+        created_at = data['created_at']
+        usuario = Usuarios(username=username, email=email, password=password, created_at=created_at)
+        db.session.add(usuario)
+        db.session.commit()
+        return jsonify({'message': 'Usuario creado correctamente como: ' + username}), 201
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para obtener un usuario por su id
+@auth_bp.route('/<int:id>', methods=['GET'])
+def get_user(id):
+    try:
+        usuario = Usuarios.query.get(id)
+        if usuario is None:
+            return jsonify({'message': 'El usuario no fue encontrado'}), 404
+        usuario_data = {
+            'id': usuario.id,
+            'username': usuario.username,
+            'email': usuario.email,
+            'created_at': usuario.created_at
+        }
+        return jsonify({'user': usuario_data})
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
