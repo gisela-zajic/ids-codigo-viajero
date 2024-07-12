@@ -14,8 +14,7 @@ def get_paquetes_turisticos():
         for paquete_turistico in paquetes_turisticos:
             paquete_turistico_data = {
                 'id': paquete_turistico.id,
-                # revisar esto
-                'paquetes_turiticos_id': paquete_turistico.paquetes_turiticos_id,
+                'destino_id': paquete_turistico.destino_id,
                 'name': paquete_turistico.name,
                 'description': paquete_turistico.description,
                 'price': paquete_turistico.price,
