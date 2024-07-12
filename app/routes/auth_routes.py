@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, request, jsonify
 from app.models.user import Usuarios
 from app import db
@@ -13,13 +14,14 @@ def register():
         username = data['username']
         email = data['email']
         password = data['password']
-        created_at = data['created_at']
+        created_at = data.get('created_at', datetime.datetime.now())
         usuario = Usuarios(username=username, email=email, password=password, created_at=created_at)
         db.session.add(usuario)
         db.session.commit()
-        return jsonify({'message': 'Usuario creado correctamente como: ' + username}), 201
+        return jsonify({'message': f'Usuario creado correctamente como: {username}'}), 201
     except Exception as error:
         print('Error', error)
+        db.session.rollback()
         return jsonify({'message': 'Internal server error'}), 500
 
 
