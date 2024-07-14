@@ -5,7 +5,7 @@ from app import db
 class PaquetesTuristicos(db.Model):
     __tablename__ = 'paquetes_turisticos'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    destino_id = db.Column(db.Integer, db.ForeignKey('destinos.id'))
+    destino_id = db.Column(db.Integer, db.ForeignKey('destinos.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(32000))
     price = db.Column(db.Integer, nullable=False)
