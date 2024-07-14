@@ -42,3 +42,20 @@ def get_user(id):
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para eliminar un usuario
+@auth_bp.route('/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    try:
+        usuario = Usuarios.query.get(id)
+        if usuario is None:
+            return jsonify({'message': 'El usuario no fue encontrado'}), 404
+
+        db.session.delete(usuario)
+        db.session.commit()
+        return jsonify({'message': 'Usuario eliminado correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
