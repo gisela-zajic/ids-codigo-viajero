@@ -10,6 +10,9 @@ paquetes_turisticos_bp = Blueprint('paquetes_turisticos', __name__)
 def get_paquetes_turisticos():
     try:
         paquetes_turisticos = PaquetesTuristicos.query.all()
+        if not paquetes_turisticos:
+            return jsonify({'message': 'No se encontraron paquetes turísticos'}), 404
+
         paquetes_turisticos_data = []
         for paquete_turistico in paquetes_turisticos:
             paquete_turistico_data = {
