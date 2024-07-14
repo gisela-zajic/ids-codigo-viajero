@@ -16,6 +16,7 @@
         }
         #destinos > a > div > img {
             height: 200px;
+            border-radius: 10px;
         }
         a {
             text-decoration: none;
@@ -24,6 +25,9 @@
             img {
                 height: 300px;
             }
+        }
+        .card {
+            border: none;
         }
     </style>
 </head>
@@ -41,39 +45,30 @@
     </header>
     
     <div class="container">
-        <div class="row justify-content-center mb-4" id="tendencias">
+        <div class="row justify-content-center mb-4" >
             <h2 class="h3"> Tendencias </h2>
             <p>Los más visitados</p>
-            <div class="carousel slide p-0 m-0">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-md-block">
-                            <h5>Primer Destino</h5>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                    </button>
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner" id="tendencias">
+                  <div class="carousel-item active">
+                    <img src="#" class="d-block w-100" alt="...">
+                  </div>
                 </div>
-            </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
         </div>
     </div>
     <div class="container">
         <h2 class="h3">Descubre</h2>
         <p>Encuentra nuevos destinos y experiencias</p>
         <div class="row g-4 justify-content-center mb-4" id="destinos">
-            <a class="col-6 col-md-4 col-lg-3 col-xl-2" href="#">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <p class="text-center fw-bold">Aleatorio</p>
-                </div>  
-            <a> 
         </div>
     </div>
 
@@ -83,7 +78,50 @@
     </footer>
     <p>Defensa al consumidor, para reclamos ingrese <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aqui</a></p>
     <script>
+        function data_received(data){
+            destinos = data.destinos
+            // Aqui estan los destinos en tendecia
+            const container = document.getElementById("tendencias") //Agarro el elemento con el id = "list" y lo guardo en la variable list
+            for (let i = 0; i < destinos.length; i++) { 
+                const item = document.createElement("div")
+                item.setAttribute("class","carousel-item")
+                
+                const img = document.createElement("img")
+                img.setAttribute("class","d-block w-100")
+                img.setAttribute("src",destinos[i].image_url)
+                img.setAttribute("alt",destinos[i].name)
 
+                item.append(img)
+                container.append(item)
+            }
+            // Aquí estan todos los destinos en cards
+            conteiner = document.getElementById("destinos") //Agarro el elemento con el id = "list" y lo guardo en la variable list
+            for (let i = 0; i < destinos.length; i++) { 
+                const item = document.createElement("a")
+                item.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
+                item.setAttribute("href","#")
+                
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
+
+                const image = document.createElement("img")
+                image.setAttribute("class","img-top")
+                image.setAttribute("src",destinos[i].image_url)
+
+                const nombre_destino = document.createElement("p")
+                nombre_destino.setAttribute("class","text-center fw-bold")
+                nombre_destino.innerText = destinos[i].name
+
+                card.append(image)
+                card.append(nombre_destino)
+                item.append(card)
+                conteiner.append(item)
+            }
+        }
+        fetch('http://localhost:5000/destinos')
+            .then((res)=>res.json())
+            .then(data_received)
+            .catch((error)=>console.log(error))
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
