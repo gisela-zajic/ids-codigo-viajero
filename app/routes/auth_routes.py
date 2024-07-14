@@ -44,6 +44,22 @@ def get_user(id):
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para iniciar sesión
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+        usuario = Usuarios.query.filter_by(email=email).first()
+        if usuario and usuario.password == password:
+            return jsonify({'message': f'Bienvenido, {usuario.username}!'}), 200
+        return jsonify({'message': 'Credenciales incorrectas'}), 401
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para eliminar un usuario
 @auth_bp.route('/<int:id>', methods=['DELETE'])
 def delete_user(id):
