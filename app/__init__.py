@@ -10,6 +10,10 @@ def create_app():
     app.config.from_object('app.config.Config')
 
     db.init_app(app)
-    migrate = Migrate(app, db)
+    Migrate(app, db)
+
+    # importo y registro el blueprint principal
+    from app.routes import main_bp
+    app.register_blueprint(main_bp)
 
     return app
