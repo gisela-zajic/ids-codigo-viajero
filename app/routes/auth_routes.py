@@ -60,6 +60,27 @@ def login():
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para actualizar la información del usuario
+@auth_bp.route('/<int:id>', methods=['PUT'])
+def update_user(id):
+    try:
+        usuario = Usuarios.query.get(id)
+        if usuario is None:
+            return jsonify({'message': 'El usuario no fue encontrado'}), 404
+
+        data = request.get_json()
+        usuario.username = data.get('username', usuario.username)
+        usuario.email = data.get('email', usuario.email)
+        usuario.password = data.get('password', usuario.password)
+
+        db.session.commit()
+        return jsonify({'message': 'Información del usuario actualizada correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para eliminar un usuario
 @auth_bp.route('/<int:id>', methods=['DELETE'])
 def delete_user(id):
