@@ -50,6 +50,30 @@ def get_paquete_turistico(id):
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para actualizar un paquete turístico
+@paquetes_turisticos_bp.route('/<int:id>', methods=['PUT'])
+def update_paquete_turistico(id):
+    try:
+        paquete_turistico = PaquetesTuristicos.query.get(id)
+        if paquete_turistico is None:
+            return jsonify({'message': 'El paquete turístico no fue encontrado'}), 404
+
+        data = request.get_json()
+        paquete_turistico.destino_id = data.get('destino_id', paquete_turistico.destino_id)
+        paquete_turistico.name = data.get('name', paquete_turistico.name)
+        paquete_turistico.description = data.get('description', paquete_turistico.description)
+        paquete_turistico.price = data.get('price', paquete_turistico.price)
+        paquete_turistico.image_url = data.get('image_url', paquete_turistico.image_url)
+        paquete_turistico.created_at = data.get('created_at', paquete_turistico.created_at)
+
+        db.session.commit()
+        return jsonify({'message': 'Paquete turístico actualizado correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para obtener todos los paquetes turísticos
 @paquetes_turisticos_bp.route('/', methods=['GET'])
 def get_paquetes_turisticos():
