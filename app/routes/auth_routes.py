@@ -11,11 +11,30 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     try:
         data = request.get_json()
+
+        # valido que los datos necesarios estén en el body
+        if not data or not all(key in data for key in ('username', 'email', 'password')):
+            return jsonify({'message': 'Faltan datos necesarios'}), 400
+
         username = data['username']
         email = data['email']
         password = data['password']
+
+        # valido que los datos no estén vacíos
+        if not username or not email or not password:
+            return jsonify({'message': 'Todos los campos son obligatorios'}), 400
+
+        # valido que la contraseña tenga al menos 6 caracteres
+        if len(password) < 6:
+            return jsonify({'message': 'La contraseña debe tener al menos 6 caracteres'}), 400
+
         created_at = data.get('created_at', datetime.datetime.now())
         usuario = Usuarios(username=username, email=email, password=password, created_at=created_at)
+
+        # valido que el usuario o el correo electrónico no existan
+        if Usuarios.query.filter((Usuarios.username == username) | (Usuarios.email == email)).first():
+            return jsonify({'message': 'El nombre de usuario o el correo electrónico ya existen'}), 400
+
         db.session.add(usuario)
         db.session.commit()
         return jsonify({'message': f'Usuario creado correctamente como: {username}'}), 201
