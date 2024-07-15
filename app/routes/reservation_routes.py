@@ -46,6 +46,28 @@ def get_reserva(id):
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para actualizar una reserva
+@reservas_bp.route('/<int:id>', methods=['PUT'])
+def update_reserva(id):
+    try:
+        reserva = Reservas.query.get(id)
+        if reserva is None:
+            return jsonify({'message': 'La reserva no fue encontrada'}), 404
+
+        data = request.get_json()
+        reserva.created_at = data.get('created_at', reserva.created_at)
+        reserva.status = data.get('status', reserva.status)
+        reserva.paquete_id = data.get('paquete_id', reserva.paquete_id)
+        reserva.user_id = data.get('user_id', reserva.user_id)
+
+        db.session.commit()
+        return jsonify({'message': 'Reserva actualizada correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para obtener todas las reservas
 @reservas_bp.route('/', methods=['GET'])
 def get_reservas():
