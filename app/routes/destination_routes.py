@@ -1,7 +1,30 @@
+import datetime
 from flask import Blueprint, request, jsonify
 from app.models.destination import Destinos
+from app import db
 
 destinos_bp = Blueprint('destinos', __name__)
+
+
+# ruta para crear un nuevo destino
+@destinos_bp.route('/', methods=['POST'])
+def create_destino():
+    try:
+        data = request.get_json()
+        destino = Destinos(
+            name=data['name'],
+            description=data['description'],
+            location=data['location'],
+            image_url=data['image_url'],
+            created_at=data.get('created_at', datetime.datetime.now())
+        )
+        db.session.add(destino)
+        db.session.commit()
+        return jsonify({'message': 'Destino creado correctamente', 'destino': destino.id}), 201
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
 
 
 # ruta para obtener todos los destinos
