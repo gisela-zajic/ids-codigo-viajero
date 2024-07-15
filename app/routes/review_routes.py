@@ -25,3 +25,20 @@ def get_resenias():
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para eliminar una reseña
+@resenias_bp.route('/<int:id>', methods=['DELETE'])
+def delete_resenia(id):
+    try:
+        resenia = Resenias.query.get(id)
+        if resenia is None:
+            return jsonify({'message': 'La reseña no fue encontrada'}), 404
+
+        db.session.delete(resenia)
+        db.session.commit()
+        return jsonify({'message': 'Reseña eliminada correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
