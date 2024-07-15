@@ -11,12 +11,30 @@ resenias_bp = Blueprint('resenias', __name__)
 def create_resenia():
     try:
         data = request.get_json()
+
+        # valido que se envíen todos los datos necesarios
+        if not data or not all(key in data for key in ('comment', 'rating', 'paquete_id', 'user_id')):
+            return jsonify({'message': 'Faltan datos necesarios'}), 400
+
+        comment = data['comment']
+        rating = data['rating']
+        paquete_id = data['paquete_id']
+        user_id = data['user_id']
+
+        # valido que los datos no estén vacíos
+        if not comment or not paquete_id or not user_id:
+            return jsonify(
+                {'message': 'El comentario, la calificación, el id del paquete y el id del user son obligatorios'}), 400
+        if rating < 1:
+            # valido que la calificación sea al menos 1 punto
+            return jsonify({'message': 'La calificación debe ser al menos 1'}), 400
+
         resenia = Resenias(
-            comment=data['comment'],
+            comment=comment,
             created_at=data.get('created_at', datetime.datetime.now()),
-            rating=data['rating'],
-            paquete_id=data['paquete_id'],
-            user_id=data['user_id']
+            rating=rating,
+            paquete_id=paquete_id,
+            user_id=user_id
         )
         db.session.add(resenia)
         db.session.commit()
