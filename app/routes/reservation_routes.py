@@ -1,8 +1,29 @@
+import datetime
 from flask import Blueprint, request, jsonify
 from app.models.reservation import Reservas
 from app import db
 
 reservas_bp = Blueprint('reservas', __name__)
+
+
+# ruta para crear una nueva reserva
+@reservas_bp.route('/', methods=['POST'])
+def create_reserva():
+    try:
+        data = request.get_json()
+        reserva = Reservas(
+            created_at=data.get('created_at', datetime.datetime.now()),
+            status=data.get('status', 'activa'),
+            paquete_id=data['paquete_id'],
+            user_id=data['user_id']
+        )
+        db.session.add(reserva)
+        db.session.commit()
+        return jsonify({'message': 'Reserva creada correctamente', 'reserva': reserva.id}), 201
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
 
 
 # ruta para obtener una reserva por su id
