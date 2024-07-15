@@ -8,6 +8,7 @@
     rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
     crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         img {
             background-color: rgb(72, 32, 181);
@@ -20,6 +21,9 @@
         }
         a {
             text-decoration: none;
+        }
+        button {
+            border: none;
         }
         @media (max-width: 800px){
             img {
@@ -36,10 +40,23 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#"><span class="text-light h1 ">VacacionAR</span></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                <a class="navbar-brand" href="#"><span class="text-light h1 ">VacacionAR</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item m-2">
+                            <a href="/register/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-box-arrow-in-right"></i> Registrate </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a href="/login/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
+                        </li>
+                    </ul>
+                  </div>
+              </div>
             </div> 
         </nav>
     </header>
@@ -81,7 +98,7 @@
         function data_received(data){
             destinos = data.destinos
             // Aqui estan los destinos en tendecia
-            const container = document.getElementById("tendencias") //Agarro el elemento con el id = "list" y lo guardo en la variable list
+            const container = document.getElementById("tendencias") 
             for (let i = 0; i < destinos.length; i++) { 
                 const item = document.createElement("div")
                 item.setAttribute("class","carousel-item")
@@ -94,8 +111,8 @@
                 item.append(img)
                 container.append(item)
             }
-            // Aquí estan todos los destinos en cards
-            conteiner = document.getElementById("destinos") //Agarro el elemento con el id = "list" y lo guardo en la variable list
+            // Aquí estan todos los destinos en cards para descubrir
+            conteiner = document.getElementById("destinos") 
             for (let i = 0; i < destinos.length; i++) { 
                 const item = document.createElement("a")
                 item.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
