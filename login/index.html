@@ -26,17 +26,17 @@
     <div class="container mt-4">
         <div class="row">
             <div class="com-12 col-ms-10 col-lg-6 mx-auto">
-                <div class="card">
+                <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
                     <div class="card-body">
-                        <h1 class="card-title">Iniciar Sesión</h1>
-                        <form>
+                        <h1 class="card-title">Ingresa</h1>
+                        <form onsubmit="ingreso(event)">
                             <div class="mb-3">
-                                <label for="correo" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" required>
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
                             </div>
                             <div class="mb-3">
                                 <label for="contraseña" class="form-label">Contraseña: </label>
-                                <input type="password" class="form-control" id="contraseña" required>
+                                <input type="password" class="form-control" name="password" id="contraseña" required>
                             </div>
                             <button type="submit" class="btn btn-success">Continuar</button>
                         </form>
@@ -45,6 +45,44 @@
             </div>
         </div>
     </div>
+    <script>
+        email="", password = ""
+
+        function data_received(data){
+            const info = data.usuarios
+            user_data = []
+            val = 0
+            for (let i = 0; i < info.length; i++) {
+                user = info[i]
+                
+                if(email == user.email){
+                    val = 1
+                    if(password == user.password){
+                        window.location.href = `/dashboard?id=${user.id}`
+                    } else {
+                        console.log("las contraseñas no coinciden")
+                    }
+                }
+
+                if(i == (info.length)-1 &&  val == 0){
+                    console.log("El correo ingresado no existe")
+                }
+            }
+        }
+        function ingreso(event){
+            event.preventDefault()
+            const formData = new FormData(event.target) 
+            email = formData.get("email")
+            password = formData.get("password")
+
+            fetch("http://localhost:5000/usuarios")
+            .then((res)=>res.json())
+            .then(data_received)
+            .catch((error)=>console.log(error))
+        }
+
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
