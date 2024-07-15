@@ -25,7 +25,6 @@ def test_register_201(client):
         'password': 'password123'
     })
     assert response.status_code == 201
-    assert 'message' in response.json
     assert response.json['message'] == 'Usuario creado correctamente como: testuser'
 
 
@@ -81,3 +80,13 @@ def test_login_200(client):
         })
         assert response.status_code == 200
         assert response.json['message'] == 'Bienvenido, testuser!'
+
+
+# prueba de inicio de sesión con credenciales incorrectas
+def test_login_invalid_credentials(client):
+    response = client.post('/auth/login', json={
+        'email': 'test@example.com',
+        'password': 'wrongpassword'
+    })
+    assert response.status_code == 401
+    assert response.json['message'] == 'Credenciales incorrectas'
