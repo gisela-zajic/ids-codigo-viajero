@@ -1,8 +1,31 @@
+import datetime
 from flask import Blueprint, request, jsonify
 from app.models.package import PaquetesTuristicos
 from app import db
 
 paquetes_turisticos_bp = Blueprint('paquetes_turisticos', __name__)
+
+
+# ruta para crear un nuevo paquete turístico
+@paquetes_turisticos_bp.route('/', methods=['POST'])
+def create_paquete_turistico():
+    try:
+        data = request.get_json()
+        paquete_turistico = PaquetesTuristicos(
+            destino_id=data['destino_id'],
+            name=data['name'],
+            description=data['description'],
+            price=data['price'],
+            image_url=data['image_url'],
+            created_at=data.get('created_at', datetime.datetime.now())
+        )
+        db.session.add(paquete_turistico)
+        db.session.commit()
+        return jsonify({'message': 'Paquete turístico creado correctamente', 'paquete_turistico': paquete_turistico.id}), 201
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
 
 
 # ruta para obtener todos los paquetes turísticos
