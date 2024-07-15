@@ -48,6 +48,29 @@ def get_destino(id):
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para actualizar un destino
+@destinos_bp.route('/<int:id>', methods=['PUT'])
+def update_destino(id):
+    try:
+        destino = Destinos.query.get(id)
+        if destino is None:
+            return jsonify({'message': 'El destino no fue encontrado'}), 404
+
+        data = request.get_json()
+        destino.name = data.get('name', destino.name)
+        destino.description = data.get('description', destino.description)
+        destino.location = data.get('location', destino.location)
+        destino.image_url = data.get('image_url', destino.image_url)
+        destino.created_at = data.get('created_at', destino.created_at)
+
+        db.session.commit()
+        return jsonify({'message': 'Destino actualizado correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para obtener todos los destinos
 @destinos_bp.route('/', methods=['GET'])
 def get_destinos():
