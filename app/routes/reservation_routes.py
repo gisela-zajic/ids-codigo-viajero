@@ -24,3 +24,20 @@ def get_reservas():
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para eliminar una reserva
+@reservas_bp.route('/<int:id>', methods=['DELETE'])
+def delete_reserva(id):
+    try:
+        reserva = Reservas.query.get(id)
+        if reserva is None:
+            return jsonify({'message': 'La reserva no fue encontrada'}), 404
+
+        db.session.delete(reserva)
+        db.session.commit()
+        return jsonify({'message': 'Reserva eliminada correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
