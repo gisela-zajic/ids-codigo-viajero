@@ -1,8 +1,30 @@
+import datetime
 from flask import Blueprint, request, jsonify
 from app.models.review import Resenias
 from app import db
 
 resenias_bp = Blueprint('resenias', __name__)
+
+
+# ruta para crear una nueva reseña
+@resenias_bp.route('/', methods=['POST'])
+def create_resenia():
+    try:
+        data = request.get_json()
+        resenia = Resenias(
+            comment=data['comment'],
+            created_at=data.get('created_at', datetime.datetime.now()),
+            rating=data['rating'],
+            paquete_id=data['paquete_id'],
+            user_id=data['user_id']
+        )
+        db.session.add(resenia)
+        db.session.commit()
+        return jsonify({'message': 'Reseña creada correctamente', 'resenia': resenia.id}), 201
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
 
 
 # ruta para obtener todas las reseñas
