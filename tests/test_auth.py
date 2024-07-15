@@ -65,3 +65,19 @@ def test_register_existing_user(client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'El nombre de usuario o el correo electrónico ya existen'
+
+
+# prueba de inicio de sesión exitoso
+def test_login_200(client):
+    with client.application.app_context():
+        # Crear un usuario para la prueba
+        user = Usuarios(username='testuser', email='test@example.com', password='password123')
+        db.session.add(user)
+        db.session.commit()
+
+        response = client.post('/auth/login', json={
+            'email': 'test@example.com',
+            'password': 'password123'
+        })
+        assert response.status_code == 200
+        assert response.json['message'] == 'Bienvenido, testuser!'
