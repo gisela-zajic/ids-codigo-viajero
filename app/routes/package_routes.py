@@ -11,12 +11,28 @@ paquetes_turisticos_bp = Blueprint('paquetes_turisticos', __name__)
 def create_paquete_turistico():
     try:
         data = request.get_json()
+
+        # valido que se envíen todos los datos necesarios
+        if not data or not all(key in data for key in ('destino_id', 'name', 'description', 'price', 'image_url')):
+            return jsonify({'message': 'Faltan datos necesarios'}), 400
+
+        destino_id = data['destino_id']
+        name = data['name']
+        description = data['description']
+        price = data['price']
+        image_url = data['image_url']
+
+        # valido que los datos sean válidos
+        if not name or not description or price <= 0:
+            return jsonify(
+                {'message': 'El nombre, la descripción y el precio son obligatorios y deben ser válidos'}), 400
+
         paquete_turistico = PaquetesTuristicos(
-            destino_id=data['destino_id'],
-            name=data['name'],
-            description=data['description'],
-            price=data['price'],
-            image_url=data['image_url'],
+            destino_id=destino_id,
+            name=name,
+            description=description,
+            price=price,
+            image_url=image_url,
             created_at=data.get('created_at', datetime.datetime.now())
         )
         db.session.add(paquete_turistico)
