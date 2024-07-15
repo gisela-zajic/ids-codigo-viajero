@@ -27,6 +27,27 @@ def create_resenia():
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para obtener una reseña por su id
+@resenias_bp.route('/<int:id>', methods=['GET'])
+def get_resenia(id):
+    try:
+        resenia = Resenias.query.get(id)
+        if resenia is None:
+            return jsonify({'message': 'La reseña no fue encontrada'}), 404
+        resenia_data = {
+            'id': resenia.id,
+            'comment': resenia.comment,
+            'created_at': resenia.created_at,
+            'rating': resenia.rating,
+            'paquete_id': resenia.paquete_id,
+            'user_id': resenia.user_id,
+        }
+        return jsonify(resenia_data)
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para obtener todas las reseñas
 @resenias_bp.route('/', methods=['GET'])
 def get_resenias():
