@@ -27,6 +27,27 @@ def create_destino():
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para obtener un destino por su id
+@destinos_bp.route('/<int:id>', methods=['GET'])
+def get_destino(id):
+    try:
+        destino = Destinos.query.get(id)
+        if destino is None:
+            return jsonify({'message': 'El destino no fue encontrado'}), 404
+        destino_data = {
+            'id': destino.id,
+            'name': destino.name,
+            'description': destino.description,
+            'location': destino.location,
+            'image_url': destino.image_url,
+            'created_at': destino.created_at
+        }
+        return jsonify(destino_data)
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para obtener todos los destinos
 @destinos_bp.route('/', methods=['GET'])
 def get_destinos():
