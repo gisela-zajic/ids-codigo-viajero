@@ -1,5 +1,7 @@
 import datetime
 from flask import Blueprint, request, jsonify
+
+from app.models import PaquetesTuristicos, Usuarios
 from app.models.reservation import Reservas
 from app import db
 
@@ -11,11 +13,32 @@ reservas_bp = Blueprint('reservas', __name__)
 def create_reserva():
     try:
         data = request.get_json()
+
+        # valido que se envíen los datos necesarios
+        if not data or not all(key in data for key in ('paquete_id', 'user_id')):
+            return jsonify({'message': 'Faltan datos necesarios'}), 400
+
+        paquete_id = data['paquete_id']
+        user_id = data['user_id']
+
+        if not paquete_id or not user_id:
+            return jsonify({'message': 'El paquete_id y el user_id son obligatorios'}), 400
+
+        # verifico la existencia del paquete turístico
+        paquete = PaquetesTuristicos.query.get(paquete_id)
+        if not paquete:
+            return jsonify({'message': 'El paquete turístico elegido no existe'}), 404
+
+        # verifico la existencia de usuario
+        usuario = Usuarios.query.get(user_id)
+        if not usuario:
+            return jsonify({'message': 'El usuario elegido no existe'}), 404
+
         reserva = Reservas(
             created_at=data.get('created_at', datetime.datetime.now()),
             status=data.get('status', 'activa'),
-            paquete_id=data['paquete_id'],
-            user_id=data['user_id']
+            paquete_id=paquete_id,
+            user_id=user_id
         )
         db.session.add(reserva)
         db.session.commit()
