@@ -27,6 +27,29 @@ def get_resenias():
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para actualizar una reseña
+@resenias_bp.route('/<int:id>', methods=['PUT'])
+def update_resenia(id):
+    try:
+        resenia = Resenias.query.get(id)
+        if resenia is None:
+            return jsonify({'message': 'La reseña no fue encontrada'}), 404
+
+        data = request.get_json()
+        resenia.comment = data.get('comment', resenia.comment)
+        resenia.created_at = data.get('created_at', resenia.created_at)
+        resenia.rating = data.get('rating', resenia.rating)
+        resenia.paquete_id = data.get('paquete_id', resenia.paquete_id)
+        resenia.user_id = data.get('user_id', resenia.user_id)
+
+        db.session.commit()
+        return jsonify({'message': 'Reseña actualizada correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para eliminar una reseña
 @resenias_bp.route('/<int:id>', methods=['DELETE'])
 def delete_resenia(id):
