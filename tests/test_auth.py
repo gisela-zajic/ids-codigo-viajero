@@ -18,13 +18,14 @@ def client():
 
 
 # prueba de registro exitoso
-def test_register_200(client):
+def test_register_201(client):
     response = client.post('/auth/register', json={
         'username': 'testuser',
         'email': 'test@example.com',
         'password': 'password123'
     })
     assert response.status_code == 201
+    assert 'message' in response.json
     assert response.json['message'] == 'Usuario creado correctamente como: testuser'
 
 
@@ -64,5 +65,3 @@ def test_register_existing_user(client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'El nombre de usuario o el correo electrónico ya existen'
-
-
