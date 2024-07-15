@@ -34,3 +34,14 @@ def test_register_missing_fields(client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'Faltan datos necesarios'
+
+
+# prueba de registro con contraseña corta
+def test_register_short_password(client):
+    response = client.post('/auth/register', json={
+        'username': 'testuser',
+        'email': 'test@example.com',
+        'password': '123'
+    })
+    assert response.status_code == 400
+    assert response.json['message'] == 'La contraseña debe tener al menos 6 caracteres'
