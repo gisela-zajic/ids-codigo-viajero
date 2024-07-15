@@ -25,3 +25,12 @@ def test_register_200(client):
     })
     assert response.status_code == 201
     assert response.json['message'] == 'Usuario creado correctamente como: testuser'
+
+
+# prueba de registro con campos faltantes
+def test_register_missing_fields(client):
+    response = client.post('/auth/register', json={
+        'username': 'testuser'
+    })
+    assert response.status_code == 400
+    assert response.json['message'] == 'Faltan datos necesarios'
