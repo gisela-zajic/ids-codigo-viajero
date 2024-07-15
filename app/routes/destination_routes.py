@@ -91,3 +91,20 @@ def get_destinos():
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para eliminar un destino
+@destinos_bp.route('/<int:id>', methods=['DELETE'])
+def delete_destino(id):
+    try:
+        destino = Destinos.query.get(id)
+        if destino is None:
+            return jsonify({'message': 'El destino no fue encontrado'}), 404
+
+        db.session.delete(destino)
+        db.session.commit()
+        return jsonify({'message': 'Destino eliminado correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
