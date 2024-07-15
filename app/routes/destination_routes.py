@@ -11,6 +11,11 @@ destinos_bp = Blueprint('destinos', __name__)
 def create_destino():
     try:
         data = request.get_json()
+
+        # valido que se envien todos los datos necesarios
+        if not data or not all(key in data for key in ('name', 'description', 'location', 'image_url')):
+            return jsonify({'message': 'Faltan datos necesarios'}), 400
+
         destino = Destinos(
             name=data['name'],
             description=data['description'],
