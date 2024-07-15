@@ -16,11 +16,20 @@ def create_destino():
         if not data or not all(key in data for key in ('name', 'description', 'location', 'image_url')):
             return jsonify({'message': 'Faltan datos necesarios'}), 400
 
+        name = data['name']
+        description = data['description']
+        location = data['location']
+        image_url = data['image_url']
+
+        # valido que name y location no esten vacios
+        if not name or not location:
+            return jsonify({'message': 'El nombre y la ubicación son obligatorios'}), 400
+
         destino = Destinos(
-            name=data['name'],
-            description=data['description'],
-            location=data['location'],
-            image_url=data['image_url'],
+            name=name,
+            description=description,
+            location=location,
+            image_url=image_url,
             created_at=data.get('created_at', datetime.datetime.now())
         )
         db.session.add(destino)
