@@ -1,5 +1,6 @@
 import pytest
 from app import create_app, db
+from app.models import Usuarios
 
 
 @pytest.fixture
@@ -45,3 +46,23 @@ def test_register_short_password(client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'La contraseña debe tener al menos 6 caracteres'
+
+
+# prueba de registro usuario existente
+def test_register_existing_user(client):
+    # Crear un usuario inicialmente
+    client.post('/auth/register', json={
+        'username': 'testuser',
+        'email': 'test@example.com',
+        'password': 'password123'
+    })
+    # Intentar crear el mismo usuario nuevamente
+    response = client.post('/auth/register', json={
+        'username': 'testuser',
+        'email': 'test@example.com',
+        'password': 'password123'
+    })
+    assert response.status_code == 400
+    assert response.json['message'] == 'El nombre de usuario o el correo electrónico ya existen'
+
+
