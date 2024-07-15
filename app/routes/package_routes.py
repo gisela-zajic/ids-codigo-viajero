@@ -98,3 +98,20 @@ def get_paquetes_turisticos():
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+# ruta para eliminar un paquete turístico
+@paquetes_turisticos_bp.route('/<int:id>', methods=['DELETE'])
+def delete_paquete_turistico(id):
+    try:
+        paquete_turistico = PaquetesTuristicos.query.get(id)
+        if paquete_turistico is None:
+            return jsonify({'message': 'El paquete turístico no fue encontrado'}), 404
+
+        db.session.delete(paquete_turistico)
+        db.session.commit()
+        return jsonify({'message': 'Paquete turístico eliminado correctamente'}), 200
+    except Exception as error:
+        print('Error', error)
+        db.session.rollback()
+        return jsonify({'message': 'Internal server error'}), 500
