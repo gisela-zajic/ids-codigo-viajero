@@ -1,7 +1,7 @@
 import datetime
 from flask import Blueprint, request, jsonify
-from app.models.review import Resenias
-from app import db
+from backend.app.models.review import Resenias
+from backend.app import db
 
 resenias_bp = Blueprint('resenias', __name__)
 

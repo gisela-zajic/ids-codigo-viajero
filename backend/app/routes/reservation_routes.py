@@ -1,9 +1,10 @@
 import datetime
 from flask import Blueprint, request, jsonify
 
-from app.models import PaquetesTuristicos, Usuarios
-from app.models.reservation import Reservas
-from app import db
+from backend.app.models.package import PaquetesTuristicos
+from backend.app.models.reservation import Reservas
+from backend.app import db
+from backend.app.models.user import Usuarios
 
 reservas_bp = Blueprint('reservas', __name__)
 

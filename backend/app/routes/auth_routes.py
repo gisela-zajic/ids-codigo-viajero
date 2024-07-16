@@ -1,7 +1,7 @@
 import datetime
 from flask import Blueprint, request, jsonify
-from app.models.user import Usuarios
-from app import db
+from backend.app.models.user import Usuarios
+from backend.app import db
 
 auth_bp = Blueprint('auth', __name__)
 
