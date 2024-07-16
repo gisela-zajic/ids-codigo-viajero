@@ -7,5 +7,5 @@ Aplicación web de viajes y turismo que permite a los usuarios explorar destinos
 ### Integrantes:
 #### - Guerrero Lara, Steve Antonio Jose - 110067
 #### - Hasi, Keren Cesia 
-#### - Zajic, Gisela Daiana
+#### - Zajic, Gisela Daiana - 108735
 
