@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="frontend")
     app.config.from_object('backend.app.config.Config')
 
     db.init_app(app)
