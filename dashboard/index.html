@@ -15,7 +15,7 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#"><span class="text-light h1 ">VacacionAR</span></a>
+              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -25,7 +25,7 @@
     <div class="container">
         <h2 class="h3">Datos personales</h2>
         <p>Podes cambiarlos cuando quieras</p>
-        <div class="row g-4 justify-content-center mb-4" id="datos">
+        <div class="row g-4 mb-4" id="datos">
             <form onsubmit="edit_user(event)">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre Completo</label>
@@ -42,6 +42,7 @@
                 </div>
                 <button type="submit" class="btn btn-warning">Editar</button>
             </form>
+            <button class="btn btn-danger col-2" onclick="remove_user()"> Remover </button>
         </div>
     </div>
 
@@ -56,7 +57,7 @@
         if (id === null){
             window.location.href = "/"
         }
-
+// obteniendo datos existentes del usuario
         function handle_get_response(content) {
             data = content.user
             document.getElementById("name").value = data.username
@@ -68,13 +69,14 @@
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
-            function handle_response(response) {
-            alert(response.message)            
-        }
 
+// editando los datos del usuario
+        function handle_response(response) {
+            alert(response.message)  
+            Window.location.reload()          
+        }
         function edit_user(event) {
             event.preventDefault()
-
             const formData = new FormData(event.target) 
             const name = formData.get("name")
             const email = formData.get("email")
@@ -82,8 +84,8 @@
 
             fetch(`http://localhost:5000/${id}`, {
             method: "PUT", 
-            headers: {"Content-Type" : "application/json"}, //declara el tipo de contenido a enviar en el post
-            body: JSON.stringify({ //stringify manda como diccionario la información
+            headers: {"Content-Type" : "application/json"}, 
+            body: JSON.stringify({ 
                 id: id,
                 name: name,
                 email: email,
@@ -93,7 +95,24 @@
                 .then((res)=>res.json())
                 .then(handle_response)
                 .catch((error)=>console.log(error))
-      }
+        }
+
+//Eliminando el usuario
+        function response_delete(response){
+            alert(response.message)
+            window.location.href = "/"
+        }
+
+        function remove_user() {
+            const sure = confirm(`¿Estas seguro de eliminar tu cuenta?`)
+            if(!sure){
+                return;
+            }
+            fetch(`http://localhost:5000/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_delete)
+                .catch((error)=>console.log(error))
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
