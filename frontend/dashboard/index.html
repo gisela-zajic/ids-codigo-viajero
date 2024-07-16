@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VacacionAR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
+    <style>
+    </style>
+</head>
+<body>
+    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h2 class="h3">Datos personales</h2>
+        <p>Podes cambiarlos cuando quieras</p>
+        <div class="row g-4 mb-4" id="datos">
+            <form onsubmit="edit_user(event)">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" >
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Ej: xxxxxx@gmail.com"  aria-describedby="emailHelp" >
+                    <div class="form-text">No compartiremos tu correo con nadie.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña: </label>
+                    <input type="password"  name="password" id="password" class="form-control" placeholder="Ingrese su contraseña" id="contraseña" >
+                </div>
+                <button type="submit" class="btn btn-warning">Editar</button>
+            </form>
+            <button class="btn btn-danger col-2" onclick="remove_user()"> Remover </button>
+        </div>
+    </div>
+
+    <footer class="container-xxl bg-info-subtle p-0 m-0">
+        <p class="text-center">Todos los derechos reservados
+        </p>
+    </footer>
+    <p>Defensa al consumidor, para reclamos ingrese <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aqui</a></p>
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        const id = params.get("id")
+        if (id === null){
+            window.location.href = "/"
+        }
+// obteniendo datos existentes del usuario
+        function handle_get_response(content) {
+            data = content.user
+            document.getElementById("name").value = data.username
+            document.getElementById("email").value = data.email
+            document.getElementById("password").value = data.password
+
+        }
+        fetch(`http://localhost:5000/${id}`)
+            .then((response)=>response.json())
+            .then(handle_get_response)
+            .catch((error)=>console.log("Error", error))
+
+// editando los datos del usuario
+        function handle_response(response) {
+            alert(response.message)
+            Window.location.reload()
+        }
+        function edit_user(event) {
+            event.preventDefault()
+            const formData = new FormData(event.target)
+            const name = formData.get("name")
+            const email = formData.get("email")
+            const password = formData.get("password")
+
+            fetch(`http://localhost:5000/${id}`, {
+            method: "PUT",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                email: email,
+                password: password
+            })
+            })
+                .then((res)=>res.json())
+                .then(handle_response)
+                .catch((error)=>console.log(error))
+        }
+
+//Eliminando el usuario
+        function response_delete(response){
+            alert(response.message)
+            window.location.href = "/"
+        }
+
+        function remove_user() {
+            const sure = confirm(`¿Estas seguro de eliminar tu cuenta?`)
+            if(!sure){
+                return;
+            }
+            fetch(`http://localhost:5000/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_delete)
+                .catch((error)=>console.log(error))
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+</html>

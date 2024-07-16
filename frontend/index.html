@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VacacionAR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        img {
+            background-color: rgb(72, 32, 181);
+            height: 400px;
+            aspect-ratio: auto 3/2;
+        }
+        #destinos > a > div > img {
+            height: 200px;
+            border-radius: 10px;
+        }
+        a {
+            text-decoration: none;
+        }
+        button {
+            border: none;
+        }
+        @media (max-width: 800px){
+            img {
+                height: 300px;
+            }
+        }
+        .card {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado de todas las páginas -->
+    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item m-2">
+                            <a href="/register/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-box-arrow-in-right"></i> Registrate </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a href="/login/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
+                        </li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center mb-4" >
+            <h2 class="h3"> Tendencias </h2>
+            <p>Los más visitados</p>
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner" id="tendencias">
+                  <div class="carousel-item active">
+                    <img src="#" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="h3">Descubre</h2>
+        <p>Encuentra nuevos destinos y experiencias</p>
+        <div class="row g-4 justify-content-center mb-4" id="destinos">
+        </div>
+    </div>
+
+    <footer class="container-xxl bg-info-subtle p-0 m-0">
+        <p class="text-center">Todos los derechos reservados
+        </p>
+    </footer>
+    <p>Defensa al consumidor, para reclamos ingrese <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aqui</a></p>
+    <script>
+        function data_received(data){
+            destinos = data.destinos
+            // Aqui estan los destinos en tendecia
+            const container = document.getElementById("tendencias")
+            for (let i = 0; i < destinos.length; i++) {
+                const item = document.createElement("div")
+                item.setAttribute("class","carousel-item")
+
+                const img = document.createElement("img")
+                img.setAttribute("class","d-block w-100")
+                img.setAttribute("src",destinos[i].image_url)
+                img.setAttribute("alt",destinos[i].name)
+
+                item.append(img)
+                container.append(item)
+            }
+            // Aquí estan todos los destinos en cards para descubrir
+            conteiner = document.getElementById("destinos")
+            for (let i = 0; i < destinos.length; i++) {
+                const item = document.createElement("a")
+                item.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
+                item.setAttribute("href","#")
+
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
+
+                const image = document.createElement("img")
+                image.setAttribute("class","img-top")
+                image.setAttribute("src",destinos[i].image_url)
+
+                const nombre_destino = document.createElement("p")
+                nombre_destino.setAttribute("class","text-center fw-bold")
+                nombre_destino.innerText = destinos[i].name
+
+                card.append(image)
+                card.append(nombre_destino)
+                item.append(card)
+                conteiner.append(item)
+            }
+        }
+        fetch('http://localhost:5000/destinos')
+            .then((res)=>res.json())
+            .then(data_received)
+            .catch((error)=>console.log(error))
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+</html>
