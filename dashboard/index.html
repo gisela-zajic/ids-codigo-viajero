@@ -65,7 +65,7 @@
             document.getElementById("password").value = data.password
 
         }
-        fetch(`http://localhost:5000/${id}`)
+        fetch(`http://127.0.0.1:5000/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
@@ -82,7 +82,7 @@
             const email = formData.get("email")
             const password = formData.get("password")
 
-            fetch(`http://localhost:5000/${id}`, {
+            fetch(`http://127.0.0.1:5000/auth/${id}`, {
             method: "PUT", 
             headers: {"Content-Type" : "application/json"}, 
             body: JSON.stringify({ 
@@ -108,7 +108,7 @@
             if(!sure){
                 return;
             }
-            fetch(`http://localhost:5000/${id}`, {method: "DELETE"})
+            fetch(`http://127.0.0.1:5000/auth/${id}`, {method: "DELETE"})
                 .then((res)=>res.json())
                 .then(response_delete)
                 .catch((error)=>console.log(error))
