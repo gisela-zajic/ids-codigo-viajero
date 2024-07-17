@@ -46,27 +46,10 @@
         </div>
     </div>
     <script>
-        email="", password = ""
 
         function data_received(data){
-            const info = data.usuarios
-            user_data = []
-            val = 0
-            for (let i = 0; i < info.length; i++) {
-                user = info[i]
-                
-                if(email == user.email){
-                    val = 1
-                    if(password == user.password){
-                        window.location.href = `/dashboard?id=${user.id}`
-                    } else {
-                        console.log("las contraseñas no coinciden")
-                    }
-                }
-
-                if(i == (info.length)-1 &&  val == 0){
-                    console.log("El correo ingresado no existe")
-                }
+            if(typeof(data.message)=="number"){
+                window.location.href = `http://localhost:8000/dashboard?id=${data.message}`
             }
         }
         function ingreso(event){
@@ -75,7 +58,15 @@
             email = formData.get("email")
             password = formData.get("password")
 
-            fetch("http://localhost:5000/usuarios")
+
+            fetch("http://127.0.0.1:5000/auth/login", {
+            method: "POST", 
+            headers: {"Content-Type" : "application/json"}, //declara el tipo de contenido a enviar en el post
+            body: JSON.stringify({ //stringify manda como diccionario la información
+                email: email,
+                password: password
+            })
+            })
             .then((res)=>res.json())
             .then(data_received)
             .catch((error)=>console.log(error))
