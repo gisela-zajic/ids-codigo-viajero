@@ -52,7 +52,8 @@
 
             </div>
         </div>
-        <div class="row" id="Reseñas"></div>
+        <div class="row" id="reseñas">
+        </div>
     </div>
     <script>
         const params = new URLSearchParams(window.location.search)
@@ -105,6 +106,51 @@
                 container.append(item)
             }
         }
+
+        function handle_response_data(content) {
+            // 'id': resenia[0],
+            //     'user': resenia[1],
+            //     'rating':resenia[2],
+            //     'package': resenia[3],
+            //     'comment':resenia[4],
+            //     'fecha':resenia[5]
+            const box = document.getElementById("reseñas")
+            for (let i = 0; i <  content.length; i++) {
+                resenia = content[i]
+
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
+
+                const user = document.createElement("p")
+                user.setAttribute("class","text-center fw-bold h3")
+                user.innerText = content[i].user
+
+                const rating = document.createElement("p")
+                rating.setAttribute("class","text-center fw-bold h3")
+                rating.innerText = content[i].rating
+
+                const fecha = document.createElement("p")
+                fecha.setAttribute("class","card-text text-center")
+                fecha.innerText = content[i].fecha
+
+                const package = document.createElement("p")
+                package.setAttribute("class","card-text text-center")
+                package.innerText = content[i].package
+
+                const comment = document.createElement("p")
+                comment.setAttribute("class","card-text text-center")
+                comment.innerText = content[i].comment
+
+
+                card.append(user)
+                card.append(rating)
+                card.append(fecha)
+                card.append(package)
+                card.append(comment)
+                box.append(card)
+            }
+        }
+
         fetch(`http://127.0.0.1:5000/destinos/${id}`)
             .then((response)=>response.json())
             .then(handle_response)
@@ -114,6 +160,11 @@
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
+        
+        fetch(`http://127.0.0.1:5000/resenias/paquete/destino/${id}`)
+            .then((response)=>response.json())
+            .then(handle_response_data)
+            .catch((error)=>console.log("Error", error))        
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
