@@ -9,6 +9,10 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
     crossorigin="anonymous">
     <style>
+        #estrella {
+            color: rgb(255, 192, 75);
+            text-shadow: 1px 1px 2px #454442;
+        }
     </style>
 </head>
 <body>
@@ -52,9 +56,24 @@
 
             </div>
         </div>
-        <div class="row" id="reseñas">
-        </div>
     </div>
+    <section class="gradient-custom">
+        <div class="container my-5 py-5">
+            <h4 class="mb-4 pb-2">Opiniones sobre este destino</h4>
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card-body p-4">
+                    <div class="row">
+                      <div class="col" id="comment">
+
+
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </section>
     <script>
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
@@ -108,48 +127,60 @@
         }
 
         function handle_response_data(content) {
-            // 'id': resenia[0],
-            //     'user': resenia[1],
-            //     'rating':resenia[2],
-            //     'package': resenia[3],
-            //     'comment':resenia[4],
-            //     'fecha':resenia[5]
-            const box = document.getElementById("reseñas")
+
+            const box = document.getElementById("comment")
+
             for (let i = 0; i <  content.length; i++) {
                 resenia = content[i]
 
+                
+
                 const card = document.createElement("div")
-                card.setAttribute("class","card")
+                card.setAttribute("class","d-flex flex-start")
+
+                const card_body = document.createElement("div")
+                card.setAttribute("class","border-bottom  flex-grow-1 flex-shrink-1")
+
+                const card_head = document.createElement("div")
+                card_head.setAttribute("class","d-flex justify-content-between align-items-center")
+
 
                 const user = document.createElement("p")
-                user.setAttribute("class","text-center fw-bold h3")
+                user.setAttribute("class"," small text-center fw-bold  mb-1")
                 user.innerText = content[i].user
 
-                const rating = document.createElement("p")
-                rating.setAttribute("class","text-center fw-bold h3")
-                rating.innerText = content[i].rating
-
                 const fecha = document.createElement("p")
-                fecha.setAttribute("class","card-text text-center")
+                fecha.setAttribute("class","small")
                 fecha.innerText = content[i].fecha
 
+                const rating = document.createElement("p")
+                rating.setAttribute("class","text-center fw-bold ")
+                
+                for (let j = 0; j < (resenia.rating); j++){
+                    rating.innerHTML += "<label id='estrella' class='h4'>★</label>"
+                }
+
+
                 const package = document.createElement("p")
-                package.setAttribute("class","card-text text-center")
-                package.innerText = content[i].package
+                package.setAttribute("class","fw-bold h5")
+                package.innerText = `Paquete: ${content[i].package}`
 
                 const comment = document.createElement("p")
-                comment.setAttribute("class","card-text text-center")
+                comment.setAttribute("class","card-text  small mb-0")
                 comment.innerText = content[i].comment
 
-
-                card.append(user)
-                card.append(rating)
-                card.append(fecha)
-                card.append(package)
-                card.append(comment)
+                card_head.append(user)
+                card_head.append(fecha)
+                card_head.append(rating)
+                card_body.append(card_head)
+                card_body.append(package)
+                card_body.append(comment)
+                card.append(card_body)
                 box.append(card)
             }
         }
+        
+        
 
         fetch(`http://127.0.0.1:5000/destinos/${id}`)
             .then((response)=>response.json())
