@@ -1,6 +1,8 @@
 import datetime
 from flask import Blueprint, request, jsonify
 from backend.app.models.review import Resenias
+from backend.app.models.package import PaquetesTuristicos
+from backend.app.models.user import Usuarios
 from backend.app import db
 
 resenias_bp = Blueprint('resenias', __name__)
@@ -110,6 +112,30 @@ def get_resenias():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+
+#Ruta para obtener todas las reseñas por destino 
+@resenias_bp.route("paquete/destino/<int:id_destino>")
+def get_resenias_by_destino_id( id_destino):
+    try:
+        resenias = db.session.query(Resenias.id,Usuarios.username,Resenias.rating,PaquetesTuristicos.name,Resenias.comment,Resenias.created_at
+                                    ).join(PaquetesTuristicos,Resenias.paquete_id == PaquetesTuristicos.id
+                                    ).join(Usuarios,Resenias.user_id == Usuarios.id
+                                    ).filter(PaquetesTuristicos.destino_id == id_destino).all()
+        resenias_data = []
+        for resenia in resenias:
+            resenia_data = {
+                'id': resenia[0],
+                'user': resenia[1],
+                'rating':resenia[2],
+                'package': resenia[3],
+                'comment':resenia[4],
+                'fecha':resenia[5]
+            }
+            resenias_data.append(resenia_data)
+        return jsonify(resenias_data)
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
 
 # ruta para eliminar una reseña
 @resenias_bp.route('/<int:id>', methods=['DELETE'])

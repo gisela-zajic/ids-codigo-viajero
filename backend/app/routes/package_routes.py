@@ -1,10 +1,35 @@
 import datetime
 from flask import Blueprint, request, jsonify
 from backend.app.models.package import PaquetesTuristicos
+from backend.app.models.destination import Destinos
 from backend.app import db
 
 paquetes_turisticos_bp = Blueprint('paquetes_turisticos', __name__)
 
+# ruta para obtener los paquetes turísticos de un destino específico
+@paquetes_turisticos_bp.route('/destino/<int:id_destino>/')
+def get_paquetes_turisticos_by_destino(id_destino):
+    try:
+        paquetes_turisticos = PaquetesTuristicos.query.where(PaquetesTuristicos.destino_id == id_destino).all()
+        if not paquetes_turisticos:
+            return jsonify({'message': 'No se encontraron paquetes turísticos'}), 404
+
+        paquetes_turisticos_data = []
+        for paquete_turistico in paquetes_turisticos:
+            paquete_turistico_data = {
+                'id': paquete_turistico.id,
+                'destino_id': paquete_turistico.destino_id,
+                'name': paquete_turistico.name,
+                'description': paquete_turistico.description,
+                'price': paquete_turistico.price,
+                'image_url': paquete_turistico.image_url,
+                'created_at': paquete_turistico.created_at
+            }
+            paquetes_turisticos_data.append(paquete_turistico_data)
+        return paquetes_turisticos_data
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
 
 # ruta para crear un nuevo paquete turístico
 @paquetes_turisticos_bp.route('/', methods=['POST'])
@@ -94,20 +119,21 @@ def update_paquete_turistico(id):
 @paquetes_turisticos_bp.route('/', methods=['GET'])
 def get_paquetes_turisticos():
     try:
-        paquetes_turisticos = PaquetesTuristicos.query.all()
+        paquetes_turisticos = db.session.query(PaquetesTuristicos, Destinos.name).filter(PaquetesTuristicos.destino_id == Destinos.id).all()
+        
         if not paquetes_turisticos:
             return jsonify({'message': 'No se encontraron paquetes turísticos'}), 404
 
         paquetes_turisticos_data = []
         for paquete_turistico in paquetes_turisticos:
             paquete_turistico_data = {
-                'id': paquete_turistico.id,
-                'destino_id': paquete_turistico.destino_id,
-                'name': paquete_turistico.name,
-                'description': paquete_turistico.description,
-                'price': paquete_turistico.price,
-                'image_url': paquete_turistico.image_url,
-                'created_at': paquete_turistico.created_at
+                'id': paquete_turistico[0].id,
+                'destino': paquete_turistico[1],
+                'name': paquete_turistico[0].name,
+                'description': paquete_turistico[0].description,
+                'price': paquete_turistico[0].price,
+                'image_url': paquete_turistico[0].image_url,
+                'created_at': paquete_turistico[0].created_at
             }
             paquetes_turisticos_data.append(paquete_turistico_data)
         return jsonify({'paquetes_turisticos': paquetes_turisticos_data})
