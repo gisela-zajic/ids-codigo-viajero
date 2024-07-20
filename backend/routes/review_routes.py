@@ -1,9 +1,9 @@
 import datetime
 from flask import Blueprint, request, jsonify
-from backend.app.models.review import Resenias
-from backend.app.models.package import PaquetesTuristicos
-from backend.app.models.user import Usuarios
-from backend.app import db
+from backend.database.models.review import Resenias
+from backend.database.models.package import PaquetesTuristicos
+from backend.database.models.user import Usuarios
+from backend.database.configs.database import db
 
 resenias_bp = Blueprint('resenias', __name__)
 

@@ -1,6 +1,6 @@
 import datetime
-from backend.app import db
 
+from backend.database.configs.database import db
 
 class Resenias(db.Model):
     __tablename__ = 'resenias'

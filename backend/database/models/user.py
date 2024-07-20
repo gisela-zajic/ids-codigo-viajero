@@ -1,5 +1,6 @@
 import datetime
-from backend.app import db
+
+from backend.database.configs.database import db
 
 
 class Usuarios(db.Model):

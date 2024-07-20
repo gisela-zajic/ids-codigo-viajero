@@ -1,7 +1,7 @@
 import datetime
 from flask import Blueprint, request, jsonify
-from backend.app.models.destination import Destinos
-from backend.app import db
+from backend.database.models.destination import Destinos
+from backend.database.configs.database import db
 
 destinos_bp = Blueprint('destinos', __name__)
 
