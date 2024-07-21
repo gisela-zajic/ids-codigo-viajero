@@ -7,6 +7,7 @@ auth_front = Blueprint('auth_front', __name__)
 BASE_URL = "http://localhost:5433"
 GET_LOGIN = BASE_URL + "/auth/login"
 REGISTER_URL = BASE_URL + "/auth/register"
+USER_URL = BASE_URL + "/user"
 
 
 @auth_front.route('/')
@@ -16,7 +17,7 @@ def hello_world():
 
 @auth_front.route('/home')
 def home():
-    return "hola"
+    return "Página de inicio"
 
 
 @auth_front.route('/register', methods=['GET', 'POST'])
@@ -39,8 +40,15 @@ def register():
             error_message = response.json().get('message', 'Registration failed')
             return f"Error: {error_message}", response.status_code
 
-
     return render_template('register/register.html', created=created)
+
+
+@auth_front.route('/dashboard')
+def dashboard():
+    user_id = request.args.get('id')
+    if user_id is None:
+        return redirect(url_for('main.auth_front.login'))
+    return render_template('dashboard/dashboard.html', user_id=user_id)
 
 
 @auth_front.route('/login', methods=['GET', 'POST'])
@@ -52,7 +60,9 @@ def login():
         response = requests.post(GET_LOGIN, json={"email": user, "password": password})
 
         if response.status_code == 200:
-            return redirect(url_for('main.auth_front.home'))
+            user_id = response.json().get('user_id')
+            return redirect(url_for('main.auth_front.dashboard', id=user_id))
+            #return redirect(url_for('main.auth_front.home'))
         else:
             error_message = response.json().get('message', 'Login failed')
             return f"Error: {error_message}", response.status_code

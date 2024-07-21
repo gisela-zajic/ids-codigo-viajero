@@ -47,7 +47,7 @@ def login():
         password = data['password']
         usuario = Usuarios.query.filter_by(email=email).first()
         if usuario and usuario.password == password:
-            return jsonify({'message': f'Bienvenido, {usuario.username}!'}), 200
+            return jsonify({'message': f'Bienvenido, {usuario.username}!', 'user_id': usuario.id}), 200
         return jsonify({'message': 'Credenciales incorrectas'}), 401
     except Exception as error:
         print('Error', error)

@@ -42,7 +42,7 @@
                 </div>
                 <button type="submit" class="btn btn-warning">Editar</button>
             </form>
-            <button class="btn btn-danger col-2" onclick="remove_user()"> Remover </button>
+            <button class="btn btn-danger col-2" onclick="remove_user()"> Eliminar cuenta </button>
         </div>
     </div>
 
@@ -51,69 +51,6 @@
         </p>
     </footer>
     <p>Defensa al consumidor, para reclamos ingrese <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aqui</a></p>
-    <script>
-        const params = new URLSearchParams(window.location.search)
-        const id = params.get("id")
-        if (id === null){
-            window.location.href = "/"
-        }
-// obteniendo datos existentes del usuario
-        function handle_get_response(content) {
-            data = content.user
-            document.getElementById("name").value = data.username
-            document.getElementById("email").value = data.email
-            document.getElementById("password").value = data.password
-
-        }
-        fetch(`http://localhost:5000/${id}`)
-            .then((response)=>response.json())
-            .then(handle_get_response)
-            .catch((error)=>console.log("Error", error))
-
-// editando los datos del usuario
-        function handle_response(response) {
-            alert(response.message)
-            Window.location.reload()
-        }
-        function edit_user(event) {
-            event.preventDefault()
-            const formData = new FormData(event.target)
-            const name = formData.get("name")
-            const email = formData.get("email")
-            const password = formData.get("password")
-
-            fetch(`http://localhost:5000/${id}`, {
-            method: "PUT",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({
-                id: id,
-                name: name,
-                email: email,
-                password: password
-            })
-            })
-                .then((res)=>res.json())
-                .then(handle_response)
-                .catch((error)=>console.log(error))
-        }
-
-//Eliminando el usuario
-        function response_delete(response){
-            alert(response.message)
-            window.location.href = "/"
-        }
-
-        function remove_user() {
-            const sure = confirm(`¿Estas seguro de eliminar tu cuenta?`)
-            if(!sure){
-                return;
-            }
-            fetch(`http://localhost:5000/${id}`, {method: "DELETE"})
-                .then((res)=>res.json())
-                .then(response_delete)
-                .catch((error)=>console.log(error))
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
