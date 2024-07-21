@@ -137,6 +137,27 @@ def get_resenias_by_destino_id( id_destino):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+#ruta que devulve todas las reseñas de un usuario
+@resenias_bp.route('/user/<int:id_user>')
+def get_resenias_by_user(id_user):
+    try:
+        resenias = Resenias.query.where(Resenias.user_id == id_user).all()
+        resenias_data = []
+        for resenia in resenias:
+            resenia_data = {
+                'id': resenia.id,
+                'comment': resenia.comment,
+                'created_at': resenia.created_at,
+                'rating': resenia.rating,
+                'paquete_id': resenia.paquete_id,
+                'user_id': resenia.user_id,
+            }
+            resenias_data.append(resenia_data)
+        return jsonify({'resenias': resenias_data})
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
 # ruta para eliminar una reseña
 @resenias_bp.route('/<int:id>', methods=['DELETE'])
 def delete_resenia(id):
