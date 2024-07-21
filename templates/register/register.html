@@ -35,23 +35,23 @@
                 <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
                     <div class="card-body">
                         <h1 class="card-title">Nuevo Usuario</h1>
-                        <form id="register-form">
+                        <form id="register-form"  action="{{url_for('main.auth_front.register')}}"  method="post">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nombre Completo</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" required>
+                                <label for="username" class="form-label">Nombre de usuario</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su nombre de usuario" required>
                             </div>
                             <div class="mb-3">
-                                <label for="correo" class="form-label">Correo Electrónico</label>
-                                <input type="email" name="email" class="form-control" id="correo" placeholder="Ej: xxxxxx@gmail.com"  aria-describedby="emailHelp" required>
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Ej: xxxxxx@gmail.com"  aria-describedby="emailHelp" required>
                                 <div class="form-text">No compartiremos tu correo con nadie.</div>
                             </div>
                             <div class="mb-3">
-                                <label for="contraseña" class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" id="contraseña" required>
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" id="password" required>
                             </div>
                             <div class="mb-3">
-                                <label for="contraseña_confirm" class="form-label">Confirmar contraseña</label>
-                                <input type="password" class="form-control" name="password_c" placeholder="Confirme su contraseña" required>
+                                <label for="password_check" class="form-label">Confirmar contraseña</label>
+                                <input type="password" class="form-control" name="password_check" placeholder="Confirme su contraseña" id="password_check" required>
                             </div>
                             <button type="submit" class="btn btn-success">Registrarse</button>
                         </form>
@@ -61,49 +61,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function handle_response(data){
-            if(data.message===true){
-                print("El usuario se creo correctamente")
-                window.location.href = "/"
-            }
-            else{
-                console.log(data.message)
-            }
-        }
-
-        function create_user(event){
-            event.preventDefault()
-            const formData = new FormData(event.target) //FormData es un contenedor que contiene toda la información de el formulario.
-            //Este busca la información del formulario por el atributo name en cada campo.
-            const username = formData.get("name")
-            const email = formData.get("email")
-            const password = formData.get("password")
-            const password_c = formData.get("password_c")
-
-            if(password != password_c){
-                console.log(password)
-                console.log(password_c)
-                alert("Las constraseñas no coinciden")
-                window.location.reload()
-
-            }
-
-            fetch("http://127.0.0.1:5000/auth/register", {
-            method: "POST",
-            headers: {"Content-Type" : "application/json"}, //declara el tipo de contenido a enviar en el post
-            body: JSON.stringify({ //stringify manda como diccionario la información
-                username: username,
-                email: email,
-                password: password
-            })
-            })
-            .then((res)=>res.json())
-            .then(handle_response)
-            .catch((error)=>console.log(error))
-
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

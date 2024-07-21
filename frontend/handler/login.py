@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from flask import Flask, render_template, url_for, redirect, request, Blueprint
 import requests
 
@@ -20,17 +22,17 @@ def home():
 @auth_front.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        user = request.form['username']
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
 
         response = requests.post(REGISTER_URL, json={
-            'username': user,
+            'username': username,
             'email': email,
             'password': password
         })
 
-        if response.status_code == 200:
+        if response.status_code == HTTPStatus.CREATED:
             return redirect(url_for('main.auth_front.login'))
         else:
             error_message = response.json().get('message', 'Registration failed')
