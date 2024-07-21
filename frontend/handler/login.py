@@ -24,12 +24,17 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        response = requests.post(REGISTER_URL, json={"username": user, "email": email, "password": password})
+        response = requests.post(REGISTER_URL, json={
+            'username': user,
+            'email': email,
+            'password': password
+        })
 
-        if response.status_code == 201:
-            return redirect(url_for('main.auth_front.home'))
+        if response.status_code == 200:
+            return redirect(url_for('main.auth_front.login'))
         else:
-            return "Error: " + response.json().get('message', 'Registration failed')
+            error_message = response.json().get('message', 'Registration failed')
+            return f"Error: {error_message}", response.status_code
 
     return render_template('register/register.html')
 
@@ -44,5 +49,8 @@ def login():
 
         if response.status_code == 200:
             return redirect(url_for('main.auth_front.home'))
+        else:
+            error_message = response.json().get('message', 'Login failed')
+            return f"Error: {error_message}", response.status_code
 
     return render_template('login/login.html')
