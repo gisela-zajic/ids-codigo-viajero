@@ -6,6 +6,7 @@ from backend.routes.register import register_routes
 
 PORT = 5433
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object('backend.database.configs.database.Config')
