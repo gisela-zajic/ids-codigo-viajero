@@ -60,7 +60,8 @@
             </thead>
             <tbody id="reservas">
             </tbody>
-          </table>
+        </table>
+        <button class="btn btn-info col-12" onclick="nueva_reserva()"> Nueva Reserva </button>
     </section>
     <footer class="container-xxl bg-info-subtle p-0 m-0">
         <p class="text-center">Todos los derechos reservados
@@ -134,6 +135,11 @@
 
 
 //Seccion de Reservas del usuario
+
+//Redireccion para reservar nuevamente
+function nueva_reserva(){
+    window.location.href = `/reservas/?id=${id}`
+}
 
 //Cancelar - Eliminar Reservas
 function response_reserva_delete(data){
