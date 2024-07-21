@@ -45,7 +45,22 @@
             <button class="btn btn-danger col-2" onclick="remove_user()"> Remover </button>
         </div>
     </section>
-    <section class="container">
+    <section class="container mb-4">
+        <h2>Mis Reseñas</h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Comentario</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="resenias">
+            </tbody>
+        </table>
+    </section>
+    <section class="container mb-4">
         <h2>Mis Reservas</h2>
         <table class="table">
             <thead>
@@ -137,12 +152,12 @@
 //Seccion de Reservas del usuario
 
 //Redireccion para reservar nuevamente
-function nueva_reserva(){
+        function nueva_reserva(){
     window.location.href = `/reservas/?id=${id}`
 }
 
 //Cancelar - Eliminar Reservas
-function response_reserva_delete(data){
+        function response_reserva_delete(data){
             alert(data.message)
             window.location.reload()
         }
@@ -163,7 +178,6 @@ function response_reserva_delete(data){
 //Listado de reservas
         function handle_reservation(data) {
             const reservas = data.reservas
-            console.log(reservas)
             const tbody = document.getElementById("reservas")
             for (let i = 0; i < reservas.length; i++) {
                 const tr = document.createElement("tr")
@@ -204,6 +218,42 @@ function response_reserva_delete(data){
         fetch(`http://127.0.0.1:5000/reservas/user/${id}`)
             .then((response)=>response.json())
             .then(handle_reservation)
+            .catch((error)=>console.log("Error", error))
+
+//Seccion de comentarios
+
+//Listando todos los comentarios del usuario
+        function handle_response_comment(content){
+            const resenias = content.resenias
+            const tbody = document.getElementById("resenias")
+
+            for (let i = 0; i < resenias.length; i++) {
+                const tr = document.createElement("tr")
+                const id = document.createElement("th")
+                id.setAttribute("scope","row")
+                id.innerText = resenias[i].id
+                tr.append(id)
+
+                const rating_cell = document.createElement("td")
+                const rating = document.createElement("p")
+                rating.setAttribute("class"," fw-bold ")
+                for (let j = 0; j < (resenias[i].rating); j++){
+                    rating.innerHTML += "<label id='estrella' class='h4'>★</label>"
+                }
+                rating_cell.append(rating)
+                tr.append(rating_cell)
+
+                const comment = document.createElement("td")
+                comment.innerText = resenias[i].comment
+                tr.append(comment)
+
+
+                tbody.append(tr)
+            }
+        }
+        fetch(`http://127.0.0.1:5000/resenias/user/${id}`)
+            .then((response)=>response.json())
+            .then(handle_response_comment)
             .catch((error)=>console.log("Error", error))
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
