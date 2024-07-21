@@ -222,6 +222,24 @@
 
 //Seccion de comentarios
 
+//Eliminar un comentario
+        function response_resenia_delete(response){
+            alert(response.message)
+            window.location.reload()
+        }
+
+        function eliminar_resenia(id){
+            const confirmacion = confirm(`Está seguro de eliminar la reseña ${id}`)
+            if(!confirmacion){
+                return
+            }
+
+            fetch(`http://127.0.0.1:5000/resenias/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_resenia_delete)
+                .catch((error)=>console.log(error))
+        }
+
 //Listando todos los comentarios del usuario
         function handle_response_comment(content){
             const resenias = content.resenias
@@ -247,6 +265,13 @@
                 comment.innerText = resenias[i].comment
                 tr.append(comment)
 
+                
+                const btn_remove = document.createElement("button")
+                btn_remove.setAttribute("type","button")
+                btn_remove.setAttribute("class","btn btn-outline-danger mx-1")
+                btn_remove.setAttribute("onclick",`eliminar_resenia(${resenias[i].id})`)
+                btn_remove.innerText = "Eliminar"
+                tr.append(btn_remove)
 
                 tbody.append(tr)
             }
