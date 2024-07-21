@@ -222,6 +222,11 @@
 
 //Seccion de comentarios
 
+//Editar un comentario
+        function edit_resernia(id_resenia){
+            window.location.href = `/resenias?id_r=${id_resenia}/?id=${id}`
+        }
+
 //Eliminar un comentario
         function response_resenia_delete(response){
             alert(response.message)
@@ -272,6 +277,14 @@
                 btn_remove.setAttribute("onclick",`eliminar_resenia(${resenias[i].id})`)
                 btn_remove.innerText = "Eliminar"
                 tr.append(btn_remove)
+
+                
+                const btn_edit = document.createElement("button")
+                btn_edit.setAttribute("type","button")
+                btn_edit.setAttribute("class","btn btn-outline-warning mx-1")
+                btn_edit.setAttribute("onclick",`edit_resernia(${resenias[i].id})`)
+                btn_edit.innerText = "Editar"
+                tr.append(btn_edit)
 
                 tbody.append(tr)
             }
