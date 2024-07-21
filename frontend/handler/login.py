@@ -21,6 +21,7 @@ def home():
 
 @auth_front.route('/register', methods=['GET', 'POST'])
 def register():
+    created = False
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -33,12 +34,13 @@ def register():
         })
 
         if response.status_code == HTTPStatus.CREATED:
-            return redirect(url_for('main.auth_front.login'))
+            created = True
         else:
             error_message = response.json().get('message', 'Registration failed')
             return f"Error: {error_message}", response.status_code
 
-    return render_template('register/register.html')
+
+    return render_template('register/register.html', created=created)
 
 
 @auth_front.route('/login', methods=['GET', 'POST'])
