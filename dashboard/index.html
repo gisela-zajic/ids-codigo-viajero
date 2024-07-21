@@ -22,7 +22,7 @@
             </div> 
         </nav>
     </header>
-    <div class="container">
+    <section class="container">
         <h2 class="h3">Datos personales</h2>
         <p>Podes cambiarlos cuando quieras</p>
         <div class="row g-4 mb-4" id="datos">
@@ -38,25 +38,43 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña: </label>
-                    <input type="password"  name="password" id="password" class="form-control" placeholder="Ingrese su contraseña" id="contraseña" >
+                    <input type="password"  name="password" id="password" class="form-control" placeholder="Ingrese su contraseña"  >
                 </div>
                 <button type="submit" class="btn btn-warning">Editar</button>
             </form>
             <button class="btn btn-danger col-2" onclick="remove_user()"> Remover </button>
         </div>
-    </div>
-
+    </section>
+    <section class="container">
+        <h2>Mis Reservas</h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Paquete</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Realizada el</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="reservas">
+            </tbody>
+          </table>
+    </section>
     <footer class="container-xxl bg-info-subtle p-0 m-0">
         <p class="text-center">Todos los derechos reservados
         </p>
     </footer>
     <p>Defensa al consumidor, para reclamos ingrese <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aqui</a></p>
     <script>
+
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
         if (id === null){
             window.location.href = "/"
         }
+        
 // obteniendo datos existentes del usuario
         function handle_get_response(content) {
             data = content.user
@@ -113,6 +131,53 @@
                 .then(response_delete)
                 .catch((error)=>console.log(error))
         }
+
+//Seccion de Reservas del usuario
+
+        function handle_reservation(data) {
+            const reservas = data.reservas
+            console.log(reservas)
+            const tbody = document.getElementById("reservas")
+            for (let i = 0; i < reservas.length; i++) {
+                const tr = document.createElement("tr")
+                // const th = document.createElement("th")
+                const id = document.createElement("th")
+                id.setAttribute("scope","row")
+                id.innerText = reservas[i].id
+                tr.append(id)
+
+                const package = document.createElement("td")
+                package.innerText = reservas[i].paquete
+                tr.append(package)
+
+                const destino = document.createElement("td")
+                destino.innerText = reservas[i].destino
+                tr.append(destino)
+
+                const estado = document.createElement("td")
+                estado.innerText = reservas[i].status
+                tr.append(estado)
+
+                const fecha_creacion = document.createElement("td")
+                fecha_creacion.innerText = reservas[i].created_at
+                tr.append(fecha_creacion)
+
+                const btn_remove = document.createElement("button")
+                btn_remove.setAttribute("type","button")
+                btn_remove.setAttribute("class","btn btn-outline-danger")
+                btn_remove.setAttribute("onclick",`canselar_reserva(${reservas[i].id})`)
+                
+                btn_remove.innerText = "Cancelar"
+                tr.append(btn_remove)
+
+                tbody.append(tr)
+            }
+
+        }
+        fetch(`http://127.0.0.1:5000/reservas/user/${id}`)
+            .then((response)=>response.json())
+            .then(handle_reservation)
+            .catch((error)=>console.log("Error", error))
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
