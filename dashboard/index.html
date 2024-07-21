@@ -132,8 +132,29 @@
                 .catch((error)=>console.log(error))
         }
 
+
 //Seccion de Reservas del usuario
 
+//Cancelar - Eliminar Reservas
+function response_reserva_delete(data){
+            alert(data.message)
+            window.location.reload()
+        }
+
+        function canselar_reserva(id){
+            const confirmacion = confirm(`¿Esta seguro de eliminar la reserva ${id}`)
+            if(!confirmacion){
+                return
+            }
+
+            fetch(`http://127.0.0.1:5000/reservas/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_reserva_delete)
+                .catch((error)=>console.log(error))
+        }
+
+
+//Listado de reservas
         function handle_reservation(data) {
             const reservas = data.reservas
             console.log(reservas)
