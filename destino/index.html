@@ -20,10 +20,23 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <ul class="navbar-nav navbar-right" id="btn">
+                        <li class="nav-item m-2">
+                            <a href="/register/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-box-arrow-in-right"></i> Registrate </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a href="/login/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
+                        </li>
+                    </ul>
+                  </div>
+              </div>
             </div> 
         </nav>
     </header>
@@ -69,7 +82,12 @@
 
                       </div>
                     </div>
-                  </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-info col-12" onclick="nueva_reseña()">
+                        Agregar Comentario
+                    </button>
+                </div>
             </div>
           </div>
         </div>
@@ -77,9 +95,15 @@
     <script>
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
+        const id_u = params.get("u_id")
         if (id === null){
             window.location.href = "/"
         }
+        if(id_u != null) {
+            const btn = document.getElementById("btn")
+            btn.classList.add("d-none")
+        }
+//Muestra la informacion del destino
         function handle_response(data) {
             const loading_message = document.getElementById("loading-message")
             loading_message.remove()
@@ -92,6 +116,7 @@
             const location = document.getElementById("location")
             location.innerText = data.location
         }
+//Muestra los paquetes disponibles
         function handle_get_response(content){
             container = document.getElementById("paquetes") 
             for (let i = 0; i < content.length; i++) { 
@@ -125,7 +150,7 @@
                 container.append(item)
             }
         }
-
+//Muestra las reseñas
         function handle_response_data(content) {
 
             const box = document.getElementById("comment")
@@ -179,7 +204,10 @@
                 box.append(card)
             }
         }
-        
+
+        function nueva_reseña() {
+            window.location.href = `/resenias/?id=${id_u}`
+        }
         
 
         fetch(`http://127.0.0.1:5000/destinos/${id}`)
