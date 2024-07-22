@@ -98,22 +98,16 @@
     <script>
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
-        const id_r = params.get("id")
-        console.log(id)
-        console.log(id_r)
+        const id_r = params.get("id_r")
+
         if (id === null && id_r === null){
             
             window.location.href = "/"
         }
 
         function handle_response(data){
-            if(Object.keys(data).length == 2){
-                alert(data.message)
-                window.location.href = `/dashboard/?id=${id}`
-            }
-            else{
-                console.log(data.message)
-            }
+            alert(data.message)
+            window.location.href = `/dashboard/?id=${id}`
         }
 
         function edit_comment(event){
@@ -128,8 +122,8 @@
                 return
             }
 
-            fetch("http://127.0.0.1:5000/resenias/", {
-            method: "POST", 
+            fetch(`http://127.0.0.1:5000/resenias/${id_r}`, {
+            method: "PUT", 
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({
                 user_id: id,
@@ -147,10 +141,10 @@
 
 // Obtengo los datos anteriores del comentario
 function handle_response_received(data) {
-            
+
+            console.log(data)
             document.getElementById("paquetes_disponibles").value = data.paquete_id
             document.getElementById("radio" + data.rating).checked = true
-
             document.getElementById("comment").value =  data.comment
         }
 
