@@ -43,14 +43,6 @@ def register():
     return render_template('register/register.html', created=created)
 
 
-@auth_front.route('/dashboard')
-def dashboard():
-    user_id = request.args.get('id')
-    if user_id is None:
-        return redirect(url_for('main.auth_front.login'))
-    return render_template('dashboard/dashboard.html', user_id=user_id)
-
-
 @auth_front.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -68,3 +60,11 @@ def login():
             return f"Error: {error_message}", response.status_code
 
     return render_template('login/login.html')
+
+
+@auth_front.route('/dashboard')
+def dashboard():
+    user_id = request.args.get('id')
+    if user_id is None:
+        return redirect(url_for('main.auth_front.login'))
+    return render_template('dashboard/dashboard.html', user_id=user_id)
