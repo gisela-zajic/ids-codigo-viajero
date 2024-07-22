@@ -93,12 +93,16 @@
         
 // obteniendo datos existentes del usuario
         function handle_get_response(content) {
+            if(content.message == 'El usuario no fue encontrado'){
+                window.location.href = "/"
+            }
             data = content.user
             document.getElementById("name").value = data.username
             document.getElementById("email").value = data.email
             document.getElementById("password").value = data.password
 
         }
+//Si el usuario no existe
         fetch(`http://127.0.0.1:5000/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
