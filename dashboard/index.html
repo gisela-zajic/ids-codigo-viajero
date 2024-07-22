@@ -181,7 +181,6 @@
             const tbody = document.getElementById("reservas")
             for (let i = 0; i < reservas.length; i++) {
                 const tr = document.createElement("tr")
-                // const th = document.createElement("th")
                 const id = document.createElement("th")
                 id.setAttribute("scope","row")
                 id.innerText = reservas[i].id
@@ -224,7 +223,7 @@
 
 //Editar un comentario
         function edit_resernia(id_resenia){
-            window.location.href = `/resenias?id_r=${id_resenia}/?id=${id}`
+            window.location.href = `/resenias/edit/?id=${id}&id_r=${id_resenia}`
         }
 
 //Eliminar un comentario
