@@ -38,11 +38,11 @@
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña">
                     </div>
-                    <button type="submit" class="btn btn-warning">Editar</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-warning">Guardar cambios</button>
+                        <button type="button" class="btn btn-danger" onclick="remove_user()">Eliminar cuenta</button>
+                    </div>
                 </form>
-            </div>
-            <div class="w-25 d-flex justify-content-end">
-                <button class="btn btn-danger" onclick="remove_user()">Eliminar cuenta</button>
             </div>
         </div>
     </div>
