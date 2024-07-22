@@ -15,7 +15,7 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+              <a class="navbar-brand" id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -90,7 +90,9 @@
         if (id === null){
             window.location.href = "/"
         }
-        
+
+        const navbar = document.getElementById("navbar")
+        navbar.setAttribute("href",`/?id=${id}`)
 // obteniendo datos existentes del usuario
         function handle_get_response(content) {
             if(content.message == 'El usuario no fue encontrado'){
