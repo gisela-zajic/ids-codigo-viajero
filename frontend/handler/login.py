@@ -8,6 +8,7 @@ BASE_URL = "http://localhost:5433"
 GET_LOGIN = BASE_URL + "/auth/login"
 REGISTER_URL = BASE_URL + "/auth/register"
 USER_URL = BASE_URL + "/user"
+DELETE_URL = BASE_URL + "/auth/delete"
 
 
 @auth_front.route('/')
@@ -60,6 +61,27 @@ def login():
             return f"Error: {error_message}", response.status_code
 
     return render_template('login/login.html')
+
+
+@auth_front.route('/delete', methods=['POST'])
+def delete_user():
+    if request.form.get('_method') == 'DELETE':
+        user_id = request.form.get('id')
+
+    if user_id:
+        try:
+            response = requests.delete(f"{DELETE_URL}/{user_id}")
+
+            if response.status_code == HTTPStatus.OK:
+                return redirect(url_for('main.auth_front.login'))
+            else:
+                error_message = response.json().get('message', 'Delete failed')
+                return f"Error: {error_message}", response.status_code
+        except Exception as e:
+            print(f"Error: {e}")
+            return f"Error: {str(e)}", HTTPStatus.INTERNAL_SERVER_ERROR
+    else:
+        return "User ID is required", HTTPStatus.BAD_REQUEST
 
 
 @auth_front.route('/dashboard')
