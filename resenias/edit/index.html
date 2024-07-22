@@ -145,7 +145,19 @@
             
         }
 
+// Obtengo los datos anteriores del comentario
+function handle_response_received(data) {
+            
+            document.getElementById("paquetes_disponibles").value = data.paquete_id
+            document.getElementById("radio" + data.rating).checked = true
 
+            document.getElementById("comment").value =  data.comment
+        }
+
+fetch(`http://127.0.0.1:5000/resenias/${id_r}`)
+            .then((response)=>response.json())
+            .then(handle_response_received)
+            .catch((error)=>console.log("Error", error))
 
 //Obtengo todos los paquetes para que el usuario elija cual
         function response_received(content) {
