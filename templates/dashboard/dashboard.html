@@ -15,6 +15,14 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Empezando a pensar menu hamburguesa -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Volver al login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </header>
@@ -41,13 +49,15 @@
                     <input type="hidden" name="id" value="{{ user_id }}">
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-warning">Guardar cambios</button>
-                        <form action="{{ url_for('main.auth_front.delete_user') }}" method="post" style="display: inline;">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="id" value="{{ user_id }}">
-                            <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
-                        </form>
+                        <a href="{{ url_for('main.auth_front.delete_user') }}" class="btn btn-danger">Eliminar cuenta</a>
+                        <!-- <button onclick="delete_user()" class="btn btn-danger">Eliminar cuenta</button> -->
                     </div>
                 </form>
+                    <!-- <form method="POST" action="{{ url_for('main.auth_front.delete_user') }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu cuenta?');">
+                        <input type="hidden" name="id" value="{{ user_id }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+                    </form>-->
             </div>
         </div>
     </div>

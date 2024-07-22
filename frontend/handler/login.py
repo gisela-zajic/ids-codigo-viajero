@@ -65,8 +65,7 @@ def login():
 
 @auth_front.route('/delete', methods=['POST'])
 def delete_user():
-    if request.form.get('_method') == 'DELETE':
-        user_id = request.form.get('id')
+    user_id = request.form.get('id')
 
     if user_id:
         try:
