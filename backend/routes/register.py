@@ -5,6 +5,7 @@ from backend.routes.package_routes import paquetes_turisticos_bp
 from backend.routes.reservation_routes import reservas_bp
 from backend.routes.review_routes import resenias_bp
 from frontend.handler.login import auth_front
+from frontend.handler.login import reservas_front
 
 
 def register_routes(app):
@@ -19,6 +20,7 @@ def register_routes(app):
     main_bp.register_blueprint(resenias_bp, url_prefix='/resenias')
 
     main_bp.register_blueprint(auth_front, url_prefix='/')
+    main_bp.register_blueprint(reservas_front, url_prefix='/reservas_front')
     app.register_blueprint(main_bp)
 
     return app

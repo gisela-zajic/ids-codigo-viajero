@@ -4,11 +4,14 @@ from flask import Flask, render_template, url_for, redirect, request, Blueprint
 import requests
 
 auth_front = Blueprint('auth_front', __name__)
+reservas_front = Blueprint('reservas_front', __name__)
+
 BASE_URL = "http://localhost:5433"
 GET_LOGIN = BASE_URL + "/auth/login"
 REGISTER_URL = BASE_URL + "/auth/register"
 USER_URL = BASE_URL + "/user"
 DELETE_URL = BASE_URL + "/auth/delete"
+RESERVAS_URL = BASE_URL + "/reservas"
 
 
 @auth_front.route('/')
@@ -89,3 +92,10 @@ def dashboard():
     if user_id is None:
         return redirect(url_for('main.auth_front.login'))
     return render_template('dashboard/dashboard.html', user_id=user_id)
+
+
+@reservas_front.route('/<int:user_id>')
+def reservas(user_id):
+    if user_id is None:
+        return redirect(url_for('main.auth_front.login'))
+    return render_template('reservas/reservas.html', user_id=user_id)

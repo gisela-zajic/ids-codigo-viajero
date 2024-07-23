@@ -8,8 +8,6 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <style>
-    </style>
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
@@ -44,77 +42,6 @@
             </div>
         </div>
     </div>
-    <script>
-        const params = new URLSearchParams(window.location.search)
-        const id = params.get("id")
-        if (id === null){
-            window.location.href = "/"
-        }
-
-
-        function handle_response(data){
-            if(Object.keys(data).length == 2){
-                alert("El paquete se reservo correctamente.")
-                window.location.href = `/dashboard/?id=${id}`
-            }
-            else{
-                console.log(data.message)
-            }
-        }
-
-        function create_reserva(event){
-            event.preventDefault()
-            const formData = new FormData(event.target)
-            const package = formData.get("package")
-
-            const validation = confirm(`Se realizará una reserva para el paquete ${package}`)
-            if(!validation){
-                return
-            }
-
-            fetch("http://127.0.0.1:5000/reservas/", {
-            method: "POST",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({
-                user_id: id,
-                paquete_id: package
-            })
-            })
-            .then((res)=>res.json())
-            .then(handle_response)
-            .catch((error)=>console.log(error))
-
-        }
-        //Obtengo todos los paquetes para que el usuario elija cual
-        function response_received(content) {
-            const paquetes = content.paquetes_turisticos
-            const opciones = document.getElementById("paquetes_disponibles")
-            for (let i = 0; i < paquetes.length; i++) {
-                const paquete = paquetes[i];
-                const opcion = document.createElement("option")
-                console.log(paquete.id)
-                opcion.setAttribute("value", paquete.id)
-                opcion.innerText = `${paquete.name} - ${paquete.destino}`
-                opciones.append(opcion)
-            }
-        }
-        fetch("http://127.0.0.1:5000/paquetes_turisticos/")
-            .then((res)=>res.json())
-            .then(response_received)
-            .catch((error)=>console.log(error))
-
-        //Obtengo todos los datos del usuario
-        function handle_get_response(content) {
-            data = content.user
-            document.getElementById("name").value = data.username
-        }
-        fetch(`http://127.0.0.1:5000/auth/${id}`)
-            .then((response)=>response.json())
-            .then(handle_get_response)
-            .catch((error)=>console.log("Error", error))
-
-
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
