@@ -110,7 +110,7 @@
         function handle_response(data){
             if(Object.keys(data).length == 2){
                 alert(data.message)
-                window.location.href = `/dashboard/?id=${id}`
+                window.location.href = `/dashboard/dashboard.html?id=${id}`
             }
             else{
                 console.log(data.message)
@@ -123,7 +123,9 @@
             const package_id = formData.get("package")
             const comment = formData.get("comment")
             const rating = formData.get("rating")
-
+            console.log (package_id)
+            console.log(comment)
+            console.log(rating)
             const validation = confirm(`Se publicará un nuevo comentario`)
             if(!validation){
                 return

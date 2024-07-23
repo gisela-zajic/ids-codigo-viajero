@@ -107,7 +107,7 @@
 
         function handle_response(data){
             alert(data.message)
-            window.location.href = `/dashboard/?id=${id}`
+            window.location.href = `/dashboard/dashboard.html?id=${id}`
         }
 
         function edit_comment(event){
@@ -117,7 +117,7 @@
             const comment = formData.get("comment")
             const rating = formData.get("rating")
 
-            const validation = confirm(`Se publicará un nuevo comentario`)
+            const validation = confirm(`Está seguro de modificar su comentario?`)
             if(!validation){
                 return
             }
