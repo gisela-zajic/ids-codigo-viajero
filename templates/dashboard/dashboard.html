@@ -53,10 +53,7 @@
                     <input type="hidden" name="id" value="{{ user_id }}">
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-warning">Guardar cambios</button>
-                        <form action="{{ url_for('main.auth_front.delete_user') }}" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="{{ user_id }}">
-                            <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
-                        </form>
+                        <a href="{{ url_for('main.auth_front.delete_user', user_id=user_id)}}" class="btn btn-danger" >Eliminar cuenta</a>
                     </div>
                 </form>
             </div>

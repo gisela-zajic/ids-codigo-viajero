@@ -1,0 +1,28 @@
+body {
+    background-color: #cbf1f8;
+}
+.modal-backdrop {
+    backdrop-filter: blur(5px);
+}
+.modal-dialog {
+    max-width: 500px;
+}
+.modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+    background-color: #f6f6f8;
+}
+.modal-header {
+    border-bottom: none;
+}
+.modal-body {
+    padding: 3.2rem;
+    text-align: center;
+}
+.modal-footer {
+    border-top: none;
+    justify-content: center;
+    margin-top: -2.5rem;
+    margin-bottom: 1.5rem;
+}
