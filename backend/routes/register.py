@@ -5,7 +5,7 @@ from backend.routes.package_routes import paquetes_turisticos_bp
 from backend.routes.reservation_routes import reservas_bp
 from backend.routes.review_routes import resenias_bp
 from frontend.handler.login import auth_front
-from frontend.handler.login import reservas_front
+from frontend.handler.reservation import reservas_front
 
 
 def register_routes(app):
