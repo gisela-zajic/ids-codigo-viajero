@@ -8,12 +8,7 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <style>
-        #estrella {
-            color: rgb(255, 192, 75);
-            text-shadow: 1px 1px 2px #454442;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/destinos_styles.css" />
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
@@ -99,7 +94,7 @@
         if (id === null){
             window.location.href = "/"
         }
-        if(id_u != null) {
+        if(id_u !== null) {
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
         }

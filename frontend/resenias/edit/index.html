@@ -8,7 +8,7 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/resenias.css" />
+    <link rel="stylesheet" type="text/css" href="/css/reviews_styles.css" />
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
@@ -74,6 +74,14 @@
         if (id === null && id_r === null){
 
             window.location.href = "/"
+        }
+        if(id_u != 'null') {
+            // Oculto los botosnes de inicio y login
+            const btn = document.getElementById("btn")
+            btn.classList.add("d-none")
+            // La redirecion a la pagina principal lleva el id del usuario
+            const navbar = document.getElementById("navbar")
+            navbar.setAttribute("href",`/?id=${id}`)
         }
 
         function handle_response(data){
