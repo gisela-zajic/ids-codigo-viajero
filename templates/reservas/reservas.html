@@ -8,6 +8,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/reservation_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <header class="container-fluid bg-info shadow-sm mb-4">
@@ -16,10 +17,16 @@
                 <a class="navbar-brand text-light" href="/">
                     <span class="h1">VacacionAR</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="respmenu ms-auto">
+                    <input type="checkbox" id="menu-toggle">
+                    <label for="menu-toggle" class="fas fa-bars"></label>
+                    <label for="menu-toggle" class="fas fa-times"></label>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Volver al login</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </nav>
     </header>
