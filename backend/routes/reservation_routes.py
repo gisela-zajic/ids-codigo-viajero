@@ -112,6 +112,30 @@ def get_reservas():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+#ruta para obtener todas las reservas de un usuario
+@reservas_bp.route('/user/<int:id_user>', methods=['GET'])
+def get_reservas_user(id_user):
+    try:
+        reservas = db.session.query(Reservas,PaquetesTuristicos.name, PaquetesTuristicos.price, Destinos.name
+                                    ).filter(Reservas.user_id == id_user
+                                             ).filter( PaquetesTuristicos.id == Reservas.paquete_id
+                                             ).filter( Destinos.id == PaquetesTuristicos.destino_id).all()
+        reservas_data = []
+        for reserva in reservas:
+            reserva_data = {
+                'id': reserva[0].id,
+                'created_at': reserva[0].created_at,
+                'status': reserva[0].status,
+                'paquete': reserva[1],
+                'destino': reserva[3],
+                'price': reserva[2] 
+            }
+            reservas_data.append(reserva_data)
+        return jsonify({'reservas': reservas_data})
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
 
 # ruta para eliminar una reserva
 @reservas_bp.route('/<int:id>', methods=['DELETE'])
