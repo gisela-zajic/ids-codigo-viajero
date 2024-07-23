@@ -44,7 +44,7 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+              <a class="navbar-brand" href="/frontend/css"><span class="text-light h1 ">VacacionAR</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -122,7 +122,7 @@
                 return
             }
 
-            fetch(`http://127.0.0.1:5000/resenias/${id_r}`, {
+            fetch(`http://127.0.0.1:5433/resenias/${id_r}`, {
             method: "PUT",
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({
@@ -148,7 +148,7 @@ function handle_response_received(data) {
             document.getElementById("comment").value =  data.comment
         }
 
-fetch(`http://127.0.0.1:5000/resenias/${id_r}`)
+fetch(`http://127.0.0.1:5433/resenias/${id_r}`)
             .then((response)=>response.json())
             .then(handle_response_received)
             .catch((error)=>console.log("Error", error))
@@ -165,17 +165,17 @@ fetch(`http://127.0.0.1:5000/resenias/${id_r}`)
                 opciones.append(opcion)
             }
         }
-        fetch("http://127.0.0.1:5000/paquetes_turisticos/")
+        fetch("http://127.0.0.1:5433/paquetes_turisticos/")
             .then((res)=>res.json())
             .then(response_received)
             .catch((error)=>console.log(error))
 
-//Obtengo todos los datos del usuario
+        //Obtengo todos los datos del usuario
         function handle_get_response(content) {
             data = content.user
             document.getElementById("name").value = data.username
         }
-        fetch(`http://127.0.0.1:5000/auth/${id}`)
+        fetch(`http://127.0.0.1:5433/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
