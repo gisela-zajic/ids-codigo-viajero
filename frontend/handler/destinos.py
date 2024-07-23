@@ -6,6 +6,6 @@ BASE_URL = "http://localhost:5433"
 DESTINOS_URL = BASE_URL + "/destinos"
 
 
-@destinos_front.route('/destinos')
-def destinos():
-    return render_template('destinos/destinos.html')
+@destinos_front.route('/destinos/<int:user_id>')
+def destinos(user_id):
+    return render_template('destinos/destinos.html', user_id=user_id)

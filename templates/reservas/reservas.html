@@ -24,8 +24,8 @@
                     <nav>
                         <ul>
                             <li><a href="/">Volver al login</a></li>
-                            <li><a href="{{ url_for('main.dashboard_front.dashboard', id=user_id )}}">Datos Personales </a></li>
-                            <li><a href="{{ url_for('main.destinos_front.destinos') }}">Ver destinos para viajar! </a></li>
+                            <li><a href="{{ url_for('main.dashboard_front.dashboard', user_id=user_id )}}">Datos Personales </a></li>
+                            <li><a href="{{ url_for('main.destinos_front.destinos', user_id=user_id) }}">Ver destinos para viajar! </a></li>
                             <li><a href="{{ url_for('main.reviews_front.reviews') }}"> Reseñas de usuarios </a></li>
                         </ul>
                     </nav>

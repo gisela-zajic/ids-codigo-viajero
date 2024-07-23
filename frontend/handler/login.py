@@ -50,7 +50,7 @@ def login():
 
         if response.status_code == 200:
             user_id = response.json().get('user_id')
-            return redirect(url_for('main.dashboard_front.dashboard', id=user_id))
+            return redirect(url_for('main.dashboard_front.dashboard', user_id=user_id))
             #return redirect(url_for('main.auth_front.home'))
         else:
             error_message = response.json().get('message', 'Login failed')
