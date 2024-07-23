@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Código Viajero</title>
+    <title>VacacionAR</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="../css/destinos_styles.css">
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
+    <style>
+        #estrella {
+            color: rgb(255, 192, 75);
+            text-shadow: 1px 1px 2px #454442;
+        }
+    </style>
 </head>
 <body>
-    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-4">
-        <nav class="navbar navbar-expand-lg">
+    <!-- Encabezado de todas las páginas -->
+    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+        <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" href="/frontend/css">
-                    <span class="h1">VacacionAR</span>
-                </a>
-                <div class="respmenu ms-auto">
-                    <input type="checkbox" id="menu-toggle">
-                    <label for="menu-toggle" class="fas fa-bars"></label>
-                    <label for="menu-toggle" class="fas fa-times"></label>
-                    <nav>
-                        <ul>
-                            <li><a href="/login">Volver al inicio</a></li>
-                            <li><a href="{{ url_for('main.dashboard_front.dashboard', user_id=user_id )}}">Datos Personales </a></li>
-                            <li><a href="{{ url_for('main.reservas_front.reservas', user_id=user_id)}}">Reservar un paquete</a></li>
-                            <li><a href="{{ url_for('main.reviews_front.reviews')}}"> Reseñas de usuarios </a></li>
-                        </ul>
-                    </nav>
-                </div>
+                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <ul class="navbar-nav navbar-right" id="btn">
+                        <li class="nav-item m-2">
+                            <a href="/register/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-box-arrow-in-right"></i> Registrate </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a href="/login/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
+                        </li>
+                    </ul>
+                  </div>
+              </div>
             </div>
         </nav>
     </header>
-
     <div class="container mt-4">
-        <div class="row">
-            <div class="card card-custom">
+        <div class="row" >
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
@@ -54,17 +59,174 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="row g-4 justify-content-center mb-4" id="paquetes">
             <div class="mx-auto">
-                <h2 class="h3">Nuestros servicios:</h2>
+                <h2 class="h3">
+                    Nuestros servicios:
+                </h2>
+
             </div>
         </div>
-        <div class="row" id="Reseñas"></div>
     </div>
+    <section class="gradient-custom">
+        <div class="container my-5 py-5">
+            <h4 class="mb-4 pb-2">Opiniones sobre este destino</h4>
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card-body p-4">
+                    <div class="row">
+                      <div class="col" id="comment">
 
+
+                      </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-info col-12" onclick="nueva_reseña()">
+                        Agregar Comentario
+                    </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        const id = params.get("id")
+        const id_u = params.get("u_id")
+        if (id === null){
+            window.location.href = "/"
+        }
+        if(id_u != null) {
+            const btn = document.getElementById("btn")
+            btn.classList.add("d-none")
+        }
+//Muestra la informacion del destino
+        function handle_response(data) {
+            const loading_message = document.getElementById("loading-message")
+            loading_message.remove()
+            const name = document.getElementById("name")
+            name.innerText = data.name
+            const image = document.getElementById("image")
+            image.setAttribute("src", data.image_url)
+            const description = document.getElementById("description")
+            description.innerText = data.description
+            const location = document.getElementById("location")
+            location.innerText = data.location
+        }
+//Muestra los paquetes disponibles
+        function handle_get_response(content){
+            container = document.getElementById("paquetes")
+            for (let i = 0; i < content.length; i++) {
+                const item = document.createElement("a")
+                item.setAttribute("class","col-md-4 col-lg-3 text-decoration-none")
+                item.setAttribute("href",`#`)
+
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
+
+                const image = document.createElement("img")
+                image.setAttribute("class","img-top")
+                image.setAttribute("src",content[i].image_url)
+
+                const nombre = document.createElement("p")
+                nombre.setAttribute("class","text-center fw-bold h3")
+                nombre.innerText = content[i].name
+
+                const descripcion = document.createElement("p")
+                descripcion.setAttribute("class","card-text text-center")
+                descripcion.innerText = content[i].description
+
+                const button = document.createElement("button")
+                button.setAttribute("class","btn btn-warning")
+                button.innerText = "Reserva Ahora"
+                card.append(image)
+                card.append(nombre)
+                card.append(descripcion)
+                card.append(button)
+                item.append(card)
+                container.append(item)
+            }
+        }
+//Muestra las reseñas
+        function handle_response_data(content) {
+
+            const box = document.getElementById("comment")
+
+            for (let i = 0; i <  content.length; i++) {
+                resenia = content[i]
+
+
+
+                const card = document.createElement("div")
+                card.setAttribute("class","d-flex flex-start")
+
+                const card_body = document.createElement("div")
+                card.setAttribute("class","border-bottom  flex-grow-1 flex-shrink-1")
+
+                const card_head = document.createElement("div")
+                card_head.setAttribute("class","d-flex justify-content-between align-items-center")
+
+
+                const user = document.createElement("p")
+                user.setAttribute("class"," small text-center fw-bold  mb-1")
+                user.innerText = content[i].user
+
+                const fecha = document.createElement("p")
+                fecha.setAttribute("class","small")
+                fecha.innerText = content[i].fecha
+
+                const rating = document.createElement("p")
+                rating.setAttribute("class","text-center fw-bold ")
+
+                for (let j = 0; j < (resenia.rating); j++){
+                    rating.innerHTML += "<label id='estrella' class='h4'>★</label>"
+                }
+
+
+                const package = document.createElement("p")
+                package.setAttribute("class","fw-bold h5")
+                package.innerText = `Paquete: ${content[i].package}`
+
+                const comment = document.createElement("p")
+                comment.setAttribute("class","card-text  small mb-0")
+                comment.innerText = content[i].comment
+
+                card_head.append(user)
+                card_head.append(fecha)
+                card_head.append(rating)
+                card_body.append(card_head)
+                card_body.append(package)
+                card_body.append(comment)
+                card.append(card_body)
+                box.append(card)
+            }
+        }
+
+        function nueva_reseña() {
+            window.location.href = `/resenias/?id=${id_u}`
+        }
+
+
+        fetch(`http://127.0.0.1:5433/destinos/${id}`)
+            .then((response)=>response.json())
+            .then(handle_response)
+            .catch((error)=>console.log("Error", error))
+
+        fetch(`http://127.0.0.1:5433/paquetes_turisticos/destino/${id}`)
+            .then((response)=>response.json())
+            .then(handle_get_response)
+            .catch((error)=>console.log("Error", error))
+
+        fetch(`http://127.0.0.1:5433/resenias/paquete/destino/${id}`)
+            .then((response)=>response.json())
+            .then(handle_response_data)
+            .catch((error)=>console.log("Error", error))
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 </html>
