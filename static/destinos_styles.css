@@ -1,0 +1,12 @@
+.card-custom {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-footer {
+    background-color: #f8f9fa;
+}
+.star-rating {
+    color: gold;
+}
+.star-rating label {
+    margin-right: 2px;
+}
