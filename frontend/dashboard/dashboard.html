@@ -185,6 +185,7 @@
 
         //Listado de reservas
         function handle_reservation(data) {
+            console.log(data)
             const reservas = data.reservas
             const tbody = document.getElementById("reservas")
             for (let i = 0; i < reservas.length; i++) {
