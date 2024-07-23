@@ -50,7 +50,7 @@ def login():
 
         if response.status_code == 200:
             user_id = response.json().get('user_id')
-            return redirect(url_for('main.auth_front.dashboard', id=user_id))
+            return redirect(url_for('main.dashboard_front.dashboard', id=user_id))
             #return redirect(url_for('main.auth_front.home'))
         else:
             error_message = response.json().get('message', 'Login failed')
@@ -77,11 +77,3 @@ def delete_user():
             return f"Error: {str(e)}", HTTPStatus.INTERNAL_SERVER_ERROR
     else:
         return "User ID is required", HTTPStatus.BAD_REQUEST
-
-
-@auth_front.route('/dashboard')
-def dashboard():
-    user_id = request.args.get('id')
-    if user_id is None:
-        return redirect(url_for('main.auth_front.login'))
-    return render_template('dashboard/dashboard.html', user_id=user_id)
