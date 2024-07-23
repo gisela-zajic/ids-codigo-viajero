@@ -55,7 +55,7 @@
         function handle_response(data){
             if(Object.keys(data).length == 2){
                 alert("El paquete se reservo correctamente.")
-                window.location.href = `/dashboard/?id=${id}`
+                window.location.href = `/dashboard/dashboard.html?id=${id}`
             }
             else{
                 console.log(data.message)
