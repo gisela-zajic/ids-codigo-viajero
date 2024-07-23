@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_migrate import Migrate
-
+from flask_cors import CORS
 from backend.database.configs.database import db
 from backend.routes.register import register_routes
 
@@ -15,6 +15,7 @@ def create_app():
     Migrate(app, db)
 
     register_routes(app)
+    CORS(app)
     return app
 
 
