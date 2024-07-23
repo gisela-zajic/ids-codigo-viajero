@@ -1,0 +1,29 @@
+input[type="radio"] {
+    display: none;
+}
+
+form > div > p >label {
+    color: grey;
+}
+.clasificacion {
+    /* La propiedad direction: rtl; cambia la dirección de escritura
+    de derecha a izquierda ( right to left ). La otra propiedad unicode-bidi
+     ( bidi de bidireccional ) se utiliza junto con la propiedad direction
+      para cambiar  la dirección del texto. */
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    }
+    form > div > p >label:hover,
+    form > div > p >label:hover ~ label {
+    color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+    color: orange;
+}
+
+#rating {
+    font-size: 3em;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px #454442;
+}
