@@ -15,7 +15,7 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <a class="navbar-brand" href="/" id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -91,12 +91,15 @@
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
         const id_u = params.get("u_id")
-        if (id === null){
+        if (id === 'null'){
             window.location.href = "/"
         }
-        if(id_u !== null) {
+        if(id_u !== 'null') {
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
+
+            const navbar = document.getElementById("navbar")
+            navbar.setAttribute("href",`/?id=${id_u}`)
         }
 
 //Muestra la informacion del destino
