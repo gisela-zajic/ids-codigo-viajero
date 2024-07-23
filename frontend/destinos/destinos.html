@@ -103,6 +103,7 @@
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
         }
+
 //Muestra la informacion del destino
         function handle_response(data) {
             const loading_message = document.getElementById("loading-message")
@@ -139,9 +140,11 @@
                 descripcion.setAttribute("class","card-text text-center")
                 descripcion.innerText = content[i].description
 
-                const button = document.createElement("button")
+                const button = document.createElement("a")
                 button.setAttribute("class","btn btn-warning")
+                button.setAttribute("href",`http://localhost:8000/reservas/reservas.html?id=${id_u}`)
                 button.innerText = "Reserva Ahora"
+
                 card.append(image)
                 card.append(nombre)
                 card.append(descripcion)
