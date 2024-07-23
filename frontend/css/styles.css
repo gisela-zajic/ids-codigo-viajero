@@ -21,23 +21,13 @@ header {
 }
 
 /* Estilo del carrusel */
-.carousel-inner .carousel-item img {
-    width: 100%;
-    height: auto;
-}
 
-/* Estilo del footer */
-footer {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    text-align: center;
-}
-/* 
 img {
     background-color: rgb(72, 32, 181);
     height: 400px;
     aspect-ratio: auto 3/2;
 }
+/* estilos de los destinos */
 #destinos > a > div > img {
     height: 200px;
     border-radius: 10px;
@@ -55,4 +45,11 @@ button {
 }
 .card {
     border: none;
-} */
+}
+
+/* Estilo del footer */
+footer {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+}

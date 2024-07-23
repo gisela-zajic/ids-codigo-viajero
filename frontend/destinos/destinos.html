@@ -8,6 +8,8 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet" type="text/css" href="/css/destinos_styles.css" />
 </head>
 <body>
@@ -21,6 +23,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" >
+                            <a class="d-none" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav navbar-right" id="btn">
                         <li class="nav-item m-2">
@@ -91,15 +96,20 @@
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
         const id_u = params.get("u_id")
-        if (id === 'null'){
+        if (id === null){
             window.location.href = "/"
         }
-        if(id_u !== 'null') {
+        if(id_u !== null) {
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
 
             const navbar = document.getElementById("navbar")
             navbar.setAttribute("href",`/?id=${id_u}`)
+
+            const dash = document.getElementById("dash")
+            dash.setAttribute("href",`/dashboard/dashboard.html?id=${id_u}`)
+            dash.setAttribute("class","nav-link active text-light fs-3") 
+
         }
 
 //Muestra la informacion del destino
