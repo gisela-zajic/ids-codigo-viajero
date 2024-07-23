@@ -31,7 +31,7 @@ def register():
 
         db.session.add(usuario)
         db.session.commit()
-        return jsonify({'message': f'Usuario creado correctamente como: {username}'}), 201
+        return jsonify({'message': f'Usuario creado correctamente como: {username}', 'id': usuario.id}), 201
     except Exception as error:
         print('Error', error)
         db.session.rollback()
@@ -87,7 +87,7 @@ def update_user(id):
         usuario.password = data.get('password', usuario.password)
 
         db.session.commit()
-        return jsonify({'message': 'Información del usuario actualizada correctamente'}), 200
+        return jsonify({'message': 'Información del usuario actualizada correctamente',}), 200
     except Exception as error:
         print('Error', error)
         db.session.rollback()
