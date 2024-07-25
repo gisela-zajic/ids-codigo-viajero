@@ -7,6 +7,12 @@
     border-radius: 5px;
 }
 
+.section-header p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #e5f4f6;
@@ -66,7 +72,11 @@ footer a {
     font-weight: bold;
 }
 
+.section-header h2.h3 {
+    font-size: 1.5rem;
+}
+
 .section-header p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #6c757d;
 }
