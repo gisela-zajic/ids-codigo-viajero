@@ -1,0 +1,28 @@
+img {
+    background-color: rgb(72, 32, 181);
+    height: 400px;
+    aspect-ratio: auto 3/2;
+}
+
+#destinos > a > div > img {
+    height: 200px;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+}
+
+@media (max-width: 800px) {
+    img {
+        height: 300px;
+    }
+}
+
+.card {
+    border: none;
+}
