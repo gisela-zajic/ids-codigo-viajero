@@ -1,0 +1,54 @@
+/* login.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e5f4f6;
+}
+
+.navbar-brand span {
+    font-weight: bold;
+}
+
+header {
+    background-color: #17a2b8;
+    color: #ffffff;
+    padding: 1rem;
+}
+
+header .navbar-brand {
+    color: #ffffff;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+input.form-control {
+    border-radius: 0.375rem;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.container.mt-4 {
+    margin-top: 2rem;
+}
