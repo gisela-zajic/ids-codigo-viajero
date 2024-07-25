@@ -82,10 +82,6 @@
 
             window.location.href = "/"
         }
-
-        const btn = document.getElementById("btn")
-        btn.classList.add("d-none")
-            // La redirecion a la pagina principal lleva el id del usuario
         const navbar = document.getElementById("navbar")
         navbar.setAttribute("href",`/?id=${id}`)
 
@@ -130,6 +126,7 @@
 function handle_response_received(data) {
 
             console.log(data)
+
             document.getElementById("paquetes_disponibles").value = data.paquete_id
             document.getElementById("radio" + data.rating).checked = true
             document.getElementById("comment").value =  data.comment
