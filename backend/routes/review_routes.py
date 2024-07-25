@@ -27,7 +27,7 @@ def create_resenia():
         if not comment or not paquete_id or not user_id:
             return jsonify(
                 {'message': 'El comentario, la calificación, el id del paquete y el id del user son obligatorios'}), 400
-        if rating < 1:
+        if int(rating) < 1:
             # valido que la calificación sea al menos 1 punto
             return jsonify({'message': 'La calificación debe ser al menos 1'}), 400
 

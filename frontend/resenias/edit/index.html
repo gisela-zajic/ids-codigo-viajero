@@ -8,46 +8,24 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <style>
-
-        input[type="radio"] {
-        display: none;
-        }
-
-        form > div > p >label {
-        color: grey;
-        }
-        .clasificacion {
-        direction: rtl;
-        unicode-bidi: bidi-override;
-        }
-        form > div > p >label:hover,
-        form > div > p >label:hover ~ label {
-        color: orange;
-        }
-
-        input[type="radio"]:checked ~ label {
-        color: orange;
-        }
-
-        #rating {
-            font-size: 3em;
-            font-weight: 500;
-            text-shadow: 1px 1px 2px #454442;
-
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/reviews_styles.css" />
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                <a class="navbar-brand" href="/" id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" >
+                            <a class="nav-link active text-light fs-3" id="dash" aria-current="page"> <i class="bi bi-person-circle"> </i> Mi cuenta</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -104,10 +82,15 @@
 
             window.location.href = "/"
         }
+        const navbar = document.getElementById("navbar")
+        navbar.setAttribute("href",`/?id=${id}`)
+
+        const dash = document.getElementById("dash")
+        dash.setAttribute("href",`/dashboard/dashboard.html?id=${id}`)
 
         function handle_response(data){
             alert(data.message)
-            window.location.href = `/dashboard/?id=${id}`
+            window.location.href = `/dashboard/dashboard.html?id=${id}`
         }
 
         function edit_comment(event){
@@ -117,7 +100,7 @@
             const comment = formData.get("comment")
             const rating = formData.get("rating")
 
-            const validation = confirm(`Se publicará un nuevo comentario`)
+            const validation = confirm(`Está seguro de modificar su comentario?`)
             if(!validation){
                 return
             }
@@ -143,6 +126,7 @@
 function handle_response_received(data) {
 
             console.log(data)
+
             document.getElementById("paquetes_disponibles").value = data.paquete_id
             document.getElementById("radio" + data.rating).checked = true
             document.getElementById("comment").value =  data.comment

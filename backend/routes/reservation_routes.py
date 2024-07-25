@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 
 from backend.database.models.package import PaquetesTuristicos
 from backend.database.models.reservation import Reservas
+from backend.database.models.destination import Destinos
 from backend.database.configs.database import db
 from backend.database.models.user import Usuarios
 

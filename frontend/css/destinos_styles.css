@@ -1,4 +1,4 @@
-.card-custom {
+/* .card-custom {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .card-footer {
@@ -51,4 +51,8 @@
 }
 .respmenu .fas.fa-times {
     display: none;
+} */
+#estrella {
+    color: rgb(255, 192, 75);
+    text-shadow: 1px 1px 2px #454442;
 }

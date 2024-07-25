@@ -8,24 +8,24 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <style>
-        #estrella {
-            color: rgb(255, 192, 75);
-            text-shadow: 1px 1px 2px #454442;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/destinos_styles.css" />
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <a class="navbar-brand" href="/" id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" >
+                            <a class="d-none" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav navbar-right" id="btn">
                         <li class="nav-item m-2">
@@ -99,10 +99,19 @@
         if (id === null){
             window.location.href = "/"
         }
-        if(id_u != null) {
+        if(id_u !== null) {
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
+
+            const navbar = document.getElementById("navbar")
+            navbar.setAttribute("href",`/?id=${id_u}`)
+
+            const dash = document.getElementById("dash")
+            dash.setAttribute("href",`/dashboard/dashboard.html?id=${id_u}`)
+            dash.setAttribute("class","nav-link active text-light fs-3") 
+
         }
+
 //Muestra la informacion del destino
         function handle_response(data) {
             const loading_message = document.getElementById("loading-message")
@@ -139,9 +148,11 @@
                 descripcion.setAttribute("class","card-text text-center")
                 descripcion.innerText = content[i].description
 
-                const button = document.createElement("button")
+                const button = document.createElement("a")
                 button.setAttribute("class","btn btn-warning")
+                button.setAttribute("href",`http://localhost:8000/reservas/reservas.html?id=${id_u}`)
                 button.innerText = "Reserva Ahora"
+
                 card.append(image)
                 card.append(nombre)
                 card.append(descripcion)
@@ -206,7 +217,7 @@
         }
 
         function nueva_reseña() {
-            window.location.href = `/resenias/?id=${id_u}`
+            window.location.href = `/resenias/resenias.html?id=${id_u}`
         }
 
 

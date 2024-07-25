@@ -62,12 +62,11 @@
     </div>
     <script>
         function handle_response(data){
-            if(data.message===true){
-                print("El usuario se creo correctamente")
-                window.location.href = "/"
-            }
-            else{
-                console.log(data.message)
+            alert(data.message)
+            if(data.id){
+                window.location.href = `/dashboard/dashboard.html?id=${data.id}`
+            } else {
+                console.log("Ocurrió un error")
             }
         }
 
@@ -84,7 +83,7 @@
                 console.log(password)
                 console.log(password_c)
                 alert("Las constraseñas no coinciden")
-                window.location.reload()
+                return
 
             }
 
