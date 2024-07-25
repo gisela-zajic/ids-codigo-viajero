@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #e5f4f6;
 }
 
 .navbar-brand span {
@@ -22,13 +22,26 @@ body {
 }
 
 footer {
-    background-color: #17a2b8;
-    color: #fff;
-    padding: 1rem 0;
+    background-color: #d1f7fc;
+    color: #1f0000;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 2rem;
 }
 
-footer p {
-    margin: 0;
+footer .footer-main-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+footer .footer-secondary-text {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+footer a {
+    color: #1e3ebd;
 }
 
 .section-header {
