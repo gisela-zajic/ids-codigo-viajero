@@ -5,6 +5,7 @@ from backend.routes.package_routes import paquetes_turisticos_bp
 from backend.routes.reservation_routes import reservas_bp
 from backend.routes.review_routes import resenias_bp
 
+
 def register_routes(app):
     # creo el blueprint principal
     main_bp = Blueprint('main', __name__)
