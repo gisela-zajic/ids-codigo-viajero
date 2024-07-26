@@ -19,7 +19,7 @@ pip install flask
 
 ## Run
 
-```zsh
+```bash
 chmod +x run.sh
 ./run.sh
 ```
