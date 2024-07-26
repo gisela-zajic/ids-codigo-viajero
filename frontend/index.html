@@ -191,70 +191,63 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get("id");
-            if (id) {
-                document.getElementById("btn").classList.add("d-none");
+        const params = new URLSearchParams(window.location.search)
+        const id = params.get("id")
+        if (id != null){
+            const btn = document.getElementById("btn")
+            btn.classList.add("d-none")
+        }
+
+        function data_received(data){
+            destinos = data.destinos
+            const container = document.getElementById("tendencias")
+
+            container.innerHTML = "";
+
+            for (let i = 0; i < destinos.length; i++) {
+                const item = document.createElement("div")
+                item.setAttribute("class","carousel-item")
+
+                if (i === 0) {
+                item.classList.add("active");
+                }
+
+                const img = document.createElement("img")
+                img.setAttribute("class","d-block w-100")
+                img.setAttribute("src",destinos[i].image_url)
+                img.setAttribute("alt",destinos[i].name)
+
+                item.append(img)
+                container.append(item)
             }
+            // Aquí estan todos los destinos en cards para descubrir
+            conteiner = document.getElementById("destinos")
+            for (let i = 0; i < destinos.length; i++) {
+                const item = document.createElement("a")
+                item.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
+                item.setAttribute("href",`/destino?id=${destinos[i].id}&u_id=${id}`)
 
-            function data_received(data) {
-                const destinos = data.destinos;
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
 
-                // Tendencias
-                const tendenciasContainer = document.getElementById("tendencias");
-                tendenciasContainer.innerHTML = "";
-                destinos.forEach(destino => {
-                    const item = document.createElement("div");
-                    item.className = "carousel-item";
+                const image = document.createElement("img")
+                image.setAttribute("class","img-top")
+                image.setAttribute("src",destinos[i].image_url)
 
-                    const img = document.createElement("img");
-                    img.className = "d-block w-100";
-                    img.src = destino.image_url;
-                    img.alt = destino.name;
+                const nombre_destino = document.createElement("p")
+                nombre_destino.setAttribute("class","text-center fw-bold")
+                nombre_destino.innerText = destinos[i].name
 
-                    item.appendChild(img);
-                    tendenciasContainer.appendChild(item);
-                });
-
-                // Descubre
-                const descubrimientosContainer = document.getElementById("destinos");
-                descubrimientosContainer.innerHTML = "";
-                destinos.forEach(destino => {
-                    const link = document.createElement("a");
-                    link.className = "col-6 col-md-4 col-lg-3 col-xl-2 mb-4 text-decoration-none text-dark";
-                    link.href = `/destino?id=${destino.id}&u_id=${id || ''}`;
-
-                    const card = document.createElement("div");
-                    card.className = "card shadow-sm";
-
-                    const image = document.createElement("img");
-                    image.className = "card-img-top";
-                    image.src = destino.image_url;
-                    image.alt = destino.name;
-
-                    const cardBody = document.createElement("div");
-                    cardBody.className = "card-body text-center";
-
-                    const nombreDestino = document.createElement("p");
-                    nombreDestino.className = "card-title fw-bold";
-                    nombreDestino.textContent = destino.name;
-
-                    cardBody.appendChild(nombreDestino);
-                    card.appendChild(image);
-                    card.appendChild(cardBody);
-                    link.appendChild(card);
-                    descubrimientosContainer.appendChild(link);
-                });
+                card.append(image)
+                card.append(nombre_destino)
+                item.append(card)
+                conteiner.append(item)
             }
-
-            fetch('http://127.0.0.1:5433/destinos/')
-                .then(response => response.json())
-                .then(data_received)
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        });
+        }
+        fetch('http://127.0.0.1:5000/destinos/')
+            .then((res)=>res.json())
+            .then(data_received)
+            .catch((error)=>console.log(error))
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
