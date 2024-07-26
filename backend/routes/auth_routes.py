@@ -31,7 +31,7 @@ def register():
 
         db.session.add(usuario)
         db.session.commit()
-        return jsonify({'message': f'Usuario creado correctamente como: {username}'}), 201
+        return jsonify({'message': f'Usuario creado correctamente como: {username}', 'id': usuario.id}), 201
     except Exception as error:
         print('Error', error)
         db.session.rollback()
