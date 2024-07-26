@@ -48,10 +48,17 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+              <a class="navbar-brand"  id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" >
+                        <a class="nav-link active text-light fs-3" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
+                    </li>
+                </ul>
+            </div>
             </div> 
         </nav>
     </header>
@@ -100,12 +107,19 @@
         </div>
     </div>
     <script>
+
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
-        if (id === null){
-            
+        if (id === null || id === 'null' || id === ''){
             window.location.href = "/"
         }
+
+        const navbar = document.getElementById("navbar")
+        navbar.setAttribute("href",`/?id=${id}`)
+
+        const dash = document.getElementById("dash")
+        dash.setAttribute("href",`/dashboard/?id=${id}`)
+
 
         function handle_response(data){
             if(Object.keys(data).length == 2){
@@ -129,7 +143,7 @@
                 return
             }
 
-            fetch("http://127.0.0.1:5000/resenias/", {
+            fetch("http://127.0.0.1:5433/resenias/", {
             method: "POST", 
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({
@@ -157,7 +171,7 @@
                 opciones.append(opcion)
             }
         }
-        fetch("http://127.0.0.1:5000/paquetes_turisticos/")
+        fetch("http://127.0.0.1:5433/paquetes_turisticos/")
             .then((res)=>res.json())
             .then(response_received)
             .catch((error)=>console.log(error))
@@ -167,10 +181,10 @@
             data = content.user
             document.getElementById("name").value = data.username
         }
-        fetch(`http://127.0.0.1:5000/auth/${id}`)
+        fetch(`http://127.0.0.1:5433/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
-            .catch((error)=>console.log("Error", error))
+            .catch((error)=>console.log("Error", error ))
 
         
     </script>

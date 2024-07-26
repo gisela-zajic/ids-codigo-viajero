@@ -105,7 +105,7 @@
 
         }
 //Si el usuario no existe
-        fetch(`http://127.0.0.1:5000/auth/${id}`)
+        fetch(`http://127.0.0.1:5433/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
@@ -122,7 +122,7 @@
             const email = formData.get("email")
             const password = formData.get("password")
 
-            fetch(`http://127.0.0.1:5000/auth/${id}`, {
+            fetch(`http://127.0.0.1:5433/auth/${id}`, {
             method: "PUT", 
             headers: {"Content-Type" : "application/json"}, 
             body: JSON.stringify({ 
@@ -148,7 +148,7 @@
             if(!sure){
                 return;
             }
-            fetch(`http://127.0.0.1:5000/auth/${id}`, {method: "DELETE"})
+            fetch(`http://127.0.0.1:5433/auth/${id}`, {method: "DELETE"})
                 .then((res)=>res.json())
                 .then(response_delete)
                 .catch((error)=>console.log(error))
@@ -174,7 +174,7 @@
                 return
             }
 
-            fetch(`http://127.0.0.1:5000/reservas/${id}`, {method: "DELETE"})
+            fetch(`http://127.0.0.1:5433/reservas/${id}`, {method: "DELETE"})
                 .then((res)=>res.json())
                 .then(response_reserva_delete)
                 .catch((error)=>console.log(error))
@@ -220,7 +220,7 @@
             }
 
         }
-        fetch(`http://127.0.0.1:5000/reservas/user/${id}`)
+        fetch(`http://127.0.0.1:5433/reservas/user/${id}`)
             .then((response)=>response.json())
             .then(handle_reservation)
             .catch((error)=>console.log("Error", error))
@@ -244,7 +244,7 @@
                 return
             }
 
-            fetch(`http://127.0.0.1:5000/resenias/${id}`, {method: "DELETE"})
+            fetch(`http://127.0.0.1:5433/resenias/${id}`, {method: "DELETE"})
                 .then((res)=>res.json())
                 .then(response_resenia_delete)
                 .catch((error)=>console.log(error))
@@ -294,7 +294,7 @@
                 tbody.append(tr)
             }
         }
-        fetch(`http://127.0.0.1:5000/resenias/user/${id}`)
+        fetch(`http://127.0.0.1:5433/resenias/user/${id}`)
             .then((response)=>response.json())
             .then(handle_response_comment)
             .catch((error)=>console.log("Error", error))

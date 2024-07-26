@@ -40,12 +40,15 @@
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="text-light h1 ">VacacionAR</span></a>
+                <a class="navbar-brand" href="/" id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" >
+                            <a class="d-none" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav navbar-right" id="btn">
                         <li class="nav-item m-2">
@@ -68,7 +71,7 @@
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner" id="tendencias">
                   <div class="carousel-item active">
-                    <img src="#" class="d-block w-100" alt="...">
+                    <img src="https://static.misionesonline.news/wp-content/uploads/2022/03/7Mar-1024x507.jpg" class="d-block w-100" alt="...">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -97,9 +100,16 @@
     <script>
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
-        if (id != null){
+        if (id !== null && id !== 'null' && id !== ''){
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
+
+            const navbar = document.getElementById("navbar")
+            navbar.setAttribute("href",`/?id=${id}`)
+
+            const dash = document.getElementById("dash")
+            dash.setAttribute("href",`/dashboard/dashboard.html?id=${id}`)
+            dash.setAttribute("class","nav-link active text-light fs-3")
         }
         
         function data_received(data){
@@ -142,7 +152,7 @@
                 conteiner.append(item)
             }
         }
-        fetch('http://127.0.0.1:5000/destinos/')
+        fetch('http://127.0.0.1:5433/destinos/')
             .then((res)=>res.json())
             .then(data_received)
             .catch((error)=>console.log(error))

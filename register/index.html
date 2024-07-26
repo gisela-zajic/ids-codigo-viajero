@@ -62,12 +62,11 @@
     </div>
     <script>
         function handle_response(data){
-            if(data.message===true){
-                print("El usuario se creo correctamente")
-                window.location.href = "/"
-            }
-            else{
-                console.log(data.message)
+            alert(data.message)
+            if(data.id){
+                window.location.href = `/dashboard/?id=${data.id}`
+            } else {
+                console.log("Ocurrió un error")
             }
         }
 
@@ -81,14 +80,12 @@
             const password_c = formData.get("password_c")
 
             if(password != password_c){
-                console.log(password)
-                console.log(password_c)
                 alert("Las constraseñas no coinciden")
-                window.location.reload()
+                return
                 
             }
 
-            fetch("http://127.0.0.1:5000/auth/register", {
+            fetch("http://127.0.0.1:5433/auth/register", {
             method: "POST", 
             headers: {"Content-Type" : "application/json"}, //declara el tipo de contenido a enviar en el post
             body: JSON.stringify({ //stringify manda como diccionario la información
