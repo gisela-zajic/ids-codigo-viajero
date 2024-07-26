@@ -1,0 +1,58 @@
+/* .card-custom {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-footer {
+    background-color: #f8f9fa;
+}
+.star-rating {
+    color: gold;
+}
+.star-rating label {
+    margin-right: 2px;
+}
+.respmenu input[type="checkbox"] {
+    display: none;
+}
+.respmenu label {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.respmenu input[type="checkbox"]:checked ~ nav ul {
+    display: block;
+}
+.respmenu ul {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+.respmenu ul li {
+    border-bottom: 1px solid #ddd;
+}
+.respmenu ul li a {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: #000;
+    text-decoration: none;
+}
+.respmenu ul li a:hover {
+    background-color: #e9ecef;
+}
+.respmenu .fas.fa-bars {
+    display: block;
+}
+.respmenu input[type="checkbox"]:checked ~ .fas.fa-bars {
+    display: none;
+}
+.respmenu input[type="checkbox"]:checked ~ .fas.fa-times {
+    display: block;
+}
+.respmenu .fas.fa-times {
+    display: none;
+} */
+#estrella {
+    color: rgb(255, 192, 75);
+    text-shadow: 1px 1px 2px #454442;
+}
