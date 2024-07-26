@@ -9,3 +9,17 @@ Aplicación web de viajes y turismo que permite a los usuarios explorar destinos
 #### - Hasi, Keren Cesia - 110218
 #### - Zajic, Gisela Daiana - 108735
 
+## Install
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install flask
+```
+
+## Run
+
+```zsh
+chmod +x run.sh
+./run.sh
+```
