@@ -5,6 +5,7 @@ from backend.database.models.package import PaquetesTuristicos
 from backend.database.models.reservation import Reservas
 from backend.database.configs.database import db
 from backend.database.models.user import Usuarios
+from backend.database.models.destination import Destinos
 
 reservas_bp = Blueprint('reservas', __name__)
 
