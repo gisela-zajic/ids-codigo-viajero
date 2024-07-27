@@ -39,17 +39,19 @@
         </nav>
     </header>
     <div class="container mt-4">
-        <div class="row" >
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <img src="" alt="" id="image" class="w-100">
+        <div class="row">
+            <div class="col-12 col-lg-10 mx-auto">
+                <div class="card">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <img src="" alt="" id="image" class="w-100 h-100">
                         </div>
-                        <div class="col-6">
-                            <span id="loading-message">Loading...</span>
-                            <h2 id="name"></h2>
-                            <p id="description"></p>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <span id="loading-message">Loading...</span>
+                                <h2 id="name"></h2>
+                                <p id="description"></p>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -57,7 +59,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="row g-4 justify-content-center mb-4" id="paquetes">
             <div class="mx-auto">
@@ -70,25 +71,23 @@
     <section class="gradient-custom">
         <div class="container my-5 py-5">
             <h4 class="mb-4 pb-2">Opiniones sobre este destino</h4>
-          <div class="row d-flex justify-content-center">
-            <div class="col-md-12 col-lg-10 col-xl-8">
-                <div class="card-body p-4">
-                    <div class="row">
-                      <div class="col" id="comment">
-
-
-                      </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col" id="comment">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer-comment">
+                        <button class="btn btn-transparent col-12" onclick="nueva_reseña()">
+                            Agregar Comentario
+                        </button>
                     </div>
                 </div>
-                <div class="card-footer-comment">
-                    <button class="btn btn-transparent col-12" onclick="nueva_reseña()">
-                        Agregar Comentario
-                    </button>
-                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
     <script>
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
@@ -110,8 +109,6 @@
 
         }
 
-
-
         //Muestra la informacion del destino
         function handle_response(data) {
             const loading_message = document.getElementById("loading-message")
@@ -126,6 +123,7 @@
             const location = document.getElementById("location")
             location.innerText = data.location
         }
+
         //Muestra los paquetes disponibles
         function handle_get_response(content){
             container = document.getElementById("paquetes")
@@ -162,28 +160,24 @@
                 container.append(item)
             }
         }
+
         //Muestra las reseñas
         function handle_response_data(content) {
-
             const box = document.getElementById("comment")
-
             for (let i = 0; i <  content.length; i++) {
                 resenia = content[i]
 
-
-
                 const card = document.createElement("div")
-                card.setAttribute("class","d-flex flex-start")
+                card.setAttribute("class","d-flex flex-start mb-3")
 
                 const card_body = document.createElement("div")
-                card.setAttribute("class","border-bottom  flex-grow-1 flex-shrink-1")
+                card_body.setAttribute("class","border-bottom flex-grow-1 flex-shrink-1")
 
                 const card_head = document.createElement("div")
                 card_head.setAttribute("class","d-flex justify-content-between align-items-center")
 
-
                 const user = document.createElement("p")
-                user.setAttribute("class"," small text-center fw-bold  mb-1")
+                user.setAttribute("class","small text-center fw-bold mb-1")
                 user.innerText = content[i].user
 
                 const fecha = document.createElement("p")
@@ -197,13 +191,12 @@
                     rating.innerHTML += "<label id='estrella' class='h4'>★</label>"
                 }
 
-
                 const package = document.createElement("p")
                 package.setAttribute("class","fw-bold h5")
                 package.innerText = `Paquete: ${content[i].package}`
 
                 const comment = document.createElement("p")
-                comment.setAttribute("class","card-text  small mb-0")
+                comment.setAttribute("class","card-text small mb-0")
                 comment.innerText = content[i].comment
 
                 card_head.append(user)
@@ -220,7 +213,6 @@
         function nueva_reseña() {
             window.location.href = `/resenias/resenias.html?id=${id_u}`
         }
-
 
         fetch(`http://127.0.0.1:5433/destinos/${id}`)
             .then((response)=>response.json())

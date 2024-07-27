@@ -37,20 +37,33 @@ header .btn-outline-light:hover {
 .card {
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: white;
+    overflow: hidden;
 }
 
 .card img {
     border-radius: 10px 0 0 10px;
+    object-fit: cover;
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
 }
 
 .card-body h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .card-body p {
-    font-size: 1.1rem;
-    line-height: 1.5;
+    font-size: 1.2rem;
+    line-height: 1.6;
     margin-top: 10px;
 }
 
@@ -63,6 +76,11 @@ header .btn-outline-light:hover {
     margin-top: 20px;
     box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
     background-color: #edf5f6;
+}
+
+.card-footer h4 {
+    margin: 0;
+    color: #17a2b8;
 }
 
 .card-footer-comment {
