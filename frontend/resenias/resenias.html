@@ -70,20 +70,13 @@
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
         if (id === null){
-
             window.location.href = "/"
         }
-        const navbar = document.getElementById("navbar")
-        navbar.setAttribute("href",`/?id=${id}`)
-
-        const dash = document.getElementById("dash")
-        dash.setAttribute("href",`/dashboard/dashboard.html?id=${id}`)
-
 
         function handle_response(data){
-            if(Object.keys(data).length == 2){
+            if(Object.keys(data).length === 2){
                 alert(data.message)
-                window.location.href = `/dashboard/?id=${id}`
+                window.location.href = `/dashboard/dashboard.html?id=${id}`
             }
             else{
                 console.log(data.message)

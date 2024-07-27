@@ -13,9 +13,9 @@
 <body>
     <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
-        <nav class="navbar navbar-expand-lg ">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/"><span class="text-light h1 ">Código Viajero</span></a>
+              <a class="navbar-brand" id="navbar"><span class="text-light h1">Código Viajero</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -50,11 +50,13 @@
             window.location.href = "/"
         }
 
+        const navbar = document.getElementById("navbar")
+        navbar.setAttribute("href",`/?id=${id}`)
 
         function handle_response(data){
             if(Object.keys(data).length == 2){
                 alert("El paquete se reservo correctamente.")
-                window.location.href = `/dashboard/?id=${id}`
+                window.location.href = `/dashboard/dashboard.html?id=${id}`
             }
             else{
                 console.log(data.message)

@@ -30,7 +30,7 @@
                             <a href="/register/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-box-arrow-in-right"></i> Registrate </a>
                         </li>
                         <li class="nav-item m-2">
-                            <a href="/login/" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
+                            <a href="/login/login.html" class="btn btn-primary btn-outline-light" type="submit"><i class="bi bi-person-circle"></i> Inicia Sesion </a>
                         </li>
                     </ul>
                   </div>
@@ -97,6 +97,7 @@
         if (id === null){
             window.location.href = "/"
         }
+
         if(id_u !== null) {
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
@@ -106,9 +107,11 @@
 
             const dash = document.getElementById("dash")
             dash.setAttribute("href",`/dashboard/dashboard.html?id=${id_u}`)
-            dash.setAttribute("class","nav-link active text-light fs-3") 
+            dash.setAttribute("class","nav-link active text-light fs-3")
 
         }
+
+
 
         //Muestra la informacion del destino
         function handle_response(data) {
@@ -118,6 +121,7 @@
             name.innerText = data.name
             const image = document.getElementById("image")
             image.setAttribute("src", data.image_url)
+            console.log(data.image_url)
             const description = document.getElementById("description")
             description.innerText = data.description
             const location = document.getElementById("location")
@@ -148,7 +152,7 @@
 
                 const button = document.createElement("a")
                 button.setAttribute("class","btn btn-warning")
-                button.setAttribute("href",`http://localhost:8000/reservas/reservas.html?id=${id_u}`)
+                button.setAttribute("href",`http://localhost:8080/reservas/reservas.html?id=${id_u}`)
                 button.innerText = "Reserva Ahora"
 
                 card.append(image)

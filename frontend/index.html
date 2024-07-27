@@ -225,7 +225,10 @@
             for (let i = 0; i < destinos.length; i++) {
                 const item = document.createElement("a")
                 item.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
-                item.setAttribute("href",`/destino?id=${destinos[i].id}&u_id=${id}`)
+                item.setAttribute("href",`destinos/destinos.html?id=${destinos[i].id}`)
+                if (id != null){
+                    item.setAttribute("href",`destinos/destinos.html?id=${destinos[i].id}&u_id=${id}`)
+                }
 
                 const card = document.createElement("div")
                 card.setAttribute("class","card")
@@ -244,7 +247,7 @@
                 conteiner.append(item)
             }
         }
-        fetch('http://127.0.0.1:5000/destinos/')
+        fetch('http://127.0.0.1:5433/destinos/')
             .then((res)=>res.json())
             .then(data_received)
             .catch((error)=>console.log(error))

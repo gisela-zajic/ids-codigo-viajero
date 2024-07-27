@@ -81,8 +81,8 @@
                 <tbody id="reservas">
                 </tbody>
             </table>
-            <button class="btn btn-info col-12" id="newReservationBtn">Nueva Reserva</button>
-            <!--<button class="btn btn-info col-12" onclick="nueva_reserva()"> Nueva Reserva </button>-->
+            <!--<button class="btn btn-info col-12" id="newReservationBtn">Nueva Reserva</button>-->
+            <button class="btn btn-info col-12" onclick="nueva_reserva()"> Nueva Reserva </button>
         </div>
     </section>
     <footer class="container-xxl">
@@ -124,7 +124,7 @@
         // editando los datos del usuario
         function handle_response(response) {
             alert(response.message)
-            Window.location.reload()
+            window.location.reload()
         }
         function edit_user(event) {
             event.preventDefault()
@@ -170,7 +170,10 @@
 
         //Redireccion para reservar nuevamente
         function nueva_reserva(){
-            window.location.href = `/reservas/?id=${id}`
+            window.location.href = `/reservas/reservas.html`
+            if (id != null){
+                window.location.href = `/reservas/reservas.html?id=${id}`
+            }
         }
 
         //Cancelar - Eliminar Reservas
