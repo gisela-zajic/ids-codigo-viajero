@@ -8,24 +8,17 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/reviews_styles.css">
+    <link rel="stylesheet" href="resenias.css">
 </head>
 <body>
     <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
-              <a class="navbar-brand"  id="navbar"><span class="text-light h1 ">VacacionAR</span></a>
+              <a class="navbar-brand" href="/"><span class="text-light h1 ">Código Viajero</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item" >
-                            <a class="nav-link active text-light fs-3" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
     </header>
@@ -74,7 +67,6 @@
         </div>
     </div>
     <script>
-
         const params = new URLSearchParams(window.location.search)
         const id = params.get("id")
         if (id === null){
@@ -91,7 +83,7 @@
         function handle_response(data){
             if(Object.keys(data).length == 2){
                 alert(data.message)
-                window.location.href = `/dashboard/dashboard.html?id=${id}`
+                window.location.href = `/dashboard/?id=${id}`
             }
             else{
                 console.log(data.message)
@@ -104,9 +96,7 @@
             const package_id = formData.get("package")
             const comment = formData.get("comment")
             const rating = formData.get("rating")
-            console.log (package_id)
-            console.log(comment)
-            console.log(rating)
+
             const validation = confirm(`Se publicará un nuevo comentario`)
             if(!validation){
                 return
@@ -128,7 +118,7 @@
             .catch((error)=>console.log(error))
 
         }
-//Obtengo todos los paquetes para que el usuario elija cual
+        //Obtengo todos los paquetes para que el usuario elija cual
         function response_received(content) {
             const paquetes = content.paquetes_turisticos
             const opciones = document.getElementById("paquetes_disponibles")
