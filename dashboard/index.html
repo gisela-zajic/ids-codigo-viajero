@@ -156,10 +156,15 @@
 
 //Seccion de Reservas del usuario
 
+//editando reservas
+function edit_reserva(id_reserva) {
+    window.location.href = `/reservas/edit/?id=${id_reserva}&id_u=${id}`
+}
+
 //Redireccion para reservar nuevamente
         function nueva_reserva(){
-    window.location.href = `/reservas/?id=${id}`
-}
+        window.location.href = `/reservas/?id=${id}`
+        }
 
 //Cancelar - Eliminar Reservas
         function response_reserva_delete(data){
@@ -211,9 +216,15 @@
                 btn_remove.setAttribute("type","button")
                 btn_remove.setAttribute("class","btn btn-outline-danger")
                 btn_remove.setAttribute("onclick",`canselar_reserva(${reservas[i].id})`)
-                
                 btn_remove.innerText = "Cancelar"
                 tr.append(btn_remove)
+
+                const btn_edit = document.createElement("button")
+                btn_edit.setAttribute("type","button")
+                btn_edit.setAttribute("class","btn btn-outline-warning mx-1")
+                btn_edit.setAttribute("onclick",`edit_reserva(${reservas[i].id})`)
+                btn_edit.innerText = "Editar"
+                tr.append(btn_edit)
 
                 tbody.append(tr)
             }
