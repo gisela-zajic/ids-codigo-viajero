@@ -9,11 +9,9 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <link rel="stylesheet" type="text/css" href="/css/destinos_styles.css" />
+    <link rel="stylesheet" type="text/css" href="destinos.css" />
 </head>
 <body>
-    <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
@@ -112,7 +110,7 @@
 
         }
 
-//Muestra la informacion del destino
+        //Muestra la informacion del destino
         function handle_response(data) {
             const loading_message = document.getElementById("loading-message")
             loading_message.remove()
@@ -125,7 +123,7 @@
             const location = document.getElementById("location")
             location.innerText = data.location
         }
-//Muestra los paquetes disponibles
+        //Muestra los paquetes disponibles
         function handle_get_response(content){
             container = document.getElementById("paquetes")
             for (let i = 0; i < content.length; i++) {
@@ -161,7 +159,7 @@
                 container.append(item)
             }
         }
-//Muestra las reseñas
+        //Muestra las reseñas
         function handle_response_data(content) {
 
             const box = document.getElementById("comment")
