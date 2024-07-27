@@ -10,3 +10,6 @@ class Resenias(db.Model):
     rating = db.Column(db.Integer, db.CheckConstraint("rating >= 1"))
     paquete_id = db.Column(db.Integer, db.ForeignKey('paquetes_turisticos.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
+
+    paquetes_turisticos = db.relationship('PaquetesTuristicos', back_populates='resenias')
+    usuarios = db.relationship('Usuarios', back_populates='resenias')

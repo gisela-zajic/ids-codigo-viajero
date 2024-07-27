@@ -11,3 +11,8 @@ class PaquetesTuristicos(db.Model):
     price = db.Column(db.Integer, nullable=False)
     image_url = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    reservas = db.relationship('Reservas', back_populates='paquetes_turisticos', cascade='all, delete-orphan')
+    resenias = db.relationship('Resenias', back_populates='paquetes_turisticos', cascade='all, delete-orphan')
+
+    destinos = db.relationship('Destinos', back_populates='paquetes_turisticos')

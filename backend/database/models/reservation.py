@@ -10,3 +10,6 @@ class Reservas(db.Model):
     status = db.Column(db.String(50), default='activa')
     paquete_id = db.Column(db.Integer, db.ForeignKey('paquetes_turisticos.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
+
+    paquetes_turisticos = db.relationship('PaquetesTuristicos', back_populates='reservas')
+    usuarios = db.relationship('Usuarios', back_populates='reservas')

@@ -10,3 +10,6 @@ class Usuarios(db.Model):
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now())
+
+    reservas = db.relationship('Reservas', back_populates='usuarios', cascade='all, delete-orphan')
+    resenias = db.relationship('Resenias', back_populates='usuarios', cascade='all, delete-orphan')

@@ -11,3 +11,5 @@ class Destinos(db.Model):
     location = db.Column(db.String(100))
     image_url = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    paquetes_turisticos = db.relationship('PaquetesTuristicos', back_populates='destinos', cascade='all, delete-orphan')
