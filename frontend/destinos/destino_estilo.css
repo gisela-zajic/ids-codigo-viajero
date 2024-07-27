@@ -235,3 +235,14 @@ header .btn-outline-light:hover {
 #estrella {
     color: #ffc107;
 }
+
+#paquetes .card-body {
+    padding: 20px;
+    background-color: #f5f8f8;
+}
+
+#paquetes h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

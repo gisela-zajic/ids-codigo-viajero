@@ -61,10 +61,13 @@
             </div>
         </div>
         <div class="row g-4 justify-content-center mb-4" id="paquetes">
-            <div class="mx-auto">
-                <h2 class="h3">
-                    Algunas actividades:
-                </h2>
+            <div class="col-12 col-lg-10 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="h3">Algunas actividades:</h2>
+                        <div class="row g-4" id="paquetes-content"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,7 +129,7 @@
 
         //Muestra los paquetes disponibles
         function handle_get_response(content){
-            container = document.getElementById("paquetes")
+            container = document.getElementById("paquetes-content")
             for (let i = 0; i < content.length; i++) {
                 const item = document.createElement("a")
                 item.setAttribute("class","col-md-4 col-lg-3 text-decoration-none")
