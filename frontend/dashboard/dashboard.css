@@ -102,27 +102,32 @@ form .btn {
 }
 
 footer {
-    background-color: #343a40;
+    background-color: #d1f7fc;
     color: white;
     text-align: center;
     padding: 10px 0;
     position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 40px;
+    margin: 0;
+    left: 0;
 }
 
 .footer-main-text {
-    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #171616;
+    margin: 4px;
 }
 
 .footer-secondary-text {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: 1rem;
+    color: #6c757d;
 }
 
 .footer-secondary-text a {
-    color: #ffc107;
+    color: #1e3ebd;
     text-decoration: none;
 }
 
