@@ -3,13 +3,13 @@
 echo
 source venv/bin/activate
 
-python3 -m http.server 8080 --directory . & HTML_SERVER_PID=$!
+python3 -m http.server 8080 --directory frontend & HTML_SERVER_PID=$!
 #python3 -m http.server 8080 --directory frontend > /dev/null 2>&1 & HTML_SERVER_PID=$!
 echo "HTML SERVER: \033[32mON!\033[0m"
 
 chmod -R 755 frontend
 
-cd .. || exit
+#cd .. || exit
 flask run -p 5433 > /dev/null 2>&1 & FLASK_SERVER_PID=$!
 #flask run --debug -p 5433 > /dev/null 2>&1 & FLASK_SERVER_PID=$!
 echo "FLASK SERVER: \033[32mON!\033[0m"
