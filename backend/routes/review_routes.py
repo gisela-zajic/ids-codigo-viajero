@@ -14,7 +14,6 @@ def create_resenia():
     try:
         data = request.get_json()
 
-        # valido que se envíen todos los datos necesarios
         if not data or not all(key in data for key in ('comment', 'rating', 'paquete_id', 'user_id')):
             return jsonify({'message': 'Faltan datos necesarios'}), 400
 
@@ -23,12 +22,10 @@ def create_resenia():
         paquete_id = data['paquete_id']
         user_id = data['user_id']
 
-        # valido que los datos no estén vacíos
         if not comment or not paquete_id or not user_id:
             return jsonify(
                 {'message': 'El comentario, la calificación, el id del paquete y el id del user son obligatorios'}), 400
         if int(rating) < 1:
-            # valido que la calificación sea al menos 1 punto
             return jsonify({'message': 'La calificación debe ser al menos 1'}), 400
 
         resenia = Resenias(
@@ -113,23 +110,24 @@ def get_resenias():
         return jsonify({'message': 'Internal server error'}), 500
 
 
-#Ruta para obtener todas las reseñas por destino 
+# Ruta para obtener todas las reseñas por destino
 @resenias_bp.route("paquete/destino/<int:id_destino>")
-def get_resenias_by_destino_id( id_destino):
+def get_resenias_by_destino_id(id_destino):
     try:
-        resenias = db.session.query(Resenias.id,Usuarios.username,Resenias.rating,PaquetesTuristicos.name,Resenias.comment,Resenias.created_at
-                                    ).join(PaquetesTuristicos,Resenias.paquete_id == PaquetesTuristicos.id
-                                    ).join(Usuarios,Resenias.user_id == Usuarios.id
-                                    ).filter(PaquetesTuristicos.destino_id == id_destino).all()
+        resenias = db.session.query(Resenias.id, Usuarios.username, Resenias.rating, PaquetesTuristicos.name,
+                                    Resenias.comment, Resenias.created_at
+                                    ).join(PaquetesTuristicos, Resenias.paquete_id == PaquetesTuristicos.id
+                                           ).join(Usuarios, Resenias.user_id == Usuarios.id
+                                                  ).filter(PaquetesTuristicos.destino_id == id_destino).all()
         resenias_data = []
         for resenia in resenias:
             resenia_data = {
                 'id': resenia[0],
                 'user': resenia[1],
-                'rating':resenia[2],
+                'rating': resenia[2],
                 'package': resenia[3],
-                'comment':resenia[4],
-                'fecha':resenia[5]
+                'comment': resenia[4],
+                'fecha': resenia[5]
             }
             resenias_data.append(resenia_data)
         return jsonify(resenias_data)
@@ -137,7 +135,8 @@ def get_resenias_by_destino_id( id_destino):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-#ruta que devulve todas las reseñas de un usuario
+
+# ruta que devulve todas las reseñas de un usuario
 @resenias_bp.route('/user/<int:id_user>')
 def get_resenias_by_user(id_user):
     try:
@@ -157,6 +156,7 @@ def get_resenias_by_user(id_user):
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
 
 # ruta para eliminar una reseña
 @resenias_bp.route('/<int:id>', methods=['DELETE'])
