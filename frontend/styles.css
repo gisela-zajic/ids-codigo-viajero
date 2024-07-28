@@ -69,3 +69,7 @@ footer .footer-secondary-text {
 footer a {
     color: #1e3ebd;
 }
+
+.card {
+    margin: auto;
+}
