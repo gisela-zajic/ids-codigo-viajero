@@ -1,5 +1,3 @@
-/* login.css */
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #e5f4f6;
@@ -51,4 +49,9 @@ input.form-control {
 
 .container.mt-4 {
     margin-top: 2rem;
+}
+
+.alert-custom {
+    display: none;
+    margin-top: 20px;
 }
