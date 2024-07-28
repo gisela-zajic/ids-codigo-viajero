@@ -12,7 +12,6 @@ def create_destino():
     try:
         data = request.get_json()
 
-        # valido que se envien todos los datos necesarios
         if not data or not all(key in data for key in ('name', 'description', 'location', 'image_url')):
             return jsonify({'message': 'Faltan datos necesarios'}), 400
 
@@ -21,7 +20,6 @@ def create_destino():
         location = data['location']
         image_url = data['image_url']
 
-        # valido que name y location no esten vacios
         if not name or not location:
             return jsonify({'message': 'El nombre y la ubicación son obligatorios'}), 400
 
