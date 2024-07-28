@@ -23,12 +23,15 @@
 </header>
 <div class="container mt-4">
     <div class="row">
-        <div class="com-12 col-ms-10 col-lg-6 mx-auto">
+        <div class="col-12 col-md-10 col-lg-6 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title">Reserva</h1>
                     <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
                         El paquete se reservó correctamente.
+                    </div>
+                    <div id="errorMessage" class="alert alert-danger" role="alert" style="display: none;">
+                        Ocurrió un error al intentar reservar el paquete. Inténtalo de nuevo.
                     </div>
                     <form onsubmit="create_reserva(event)" id="reserva">
                         <div class="mb-3">
@@ -48,75 +51,84 @@
     </div>
 </div>
 <script>
-    const params = new URLSearchParams(window.location.search)
-    const id = params.get("id")
-    if (id === null){
-        window.location.href = "/"
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id === null) {
+        window.location.href = "/";
     }
 
-    const navbar = document.getElementById("navbar")
-    navbar.setAttribute("href",`/?id=${id}`)
+    const navbar = document.getElementById("navbar");
+    navbar.setAttribute("href", `/?id=${id}`);
 
-    function handle_response(data){
-        if(Object.keys(data).length == 2){
+    function handle_response(data) {
+        if (Object.keys(data).length === 2) {
             document.getElementById('successMessage').style.display = 'block';
             setTimeout(() => {
-                window.location.href = `/dashboard/dashboard.html?id=${id}`
+                window.location.href = `/dashboard/dashboard.html?id=${id}`;
             }, 2000);
-        }
-        else{
-            console.log(data.message)
+        } else {
+            document.getElementById('errorMessage').style.display = 'block';
+            console.log(data.message);
         }
     }
 
-    function create_reserva(event){
-        event.preventDefault()
-        const formData = new FormData(event.target)
-        const package = formData.get("package")
+    function create_reserva(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const package = formData.get("package");
 
-        const validation = confirm(`Se realizará una reserva para el paquete ${package}`)
-        if(!validation){
-            return
+        if (!package || package === "Selecciona un paquete") {
+            alert("Por favor, selecciona un paquete.");
+            return;
+        }
+
+        const validation = confirm(`Se realizará una reserva para el paquete ${package}`);
+        if (!validation) {
+            return;
         }
 
         fetch("http://127.0.0.1:5433/reservas/", {
-        method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify({
-            user_id: id,
-            paquete_id: package
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: id,
+                paquete_id: package
+            })
         })
-        })
-        .then((res)=>res.json())
+        .then(res => res.json())
         .then(handle_response)
-        .catch((error)=>console.log(error))
-
+        .catch(error => {
+            document.getElementById('errorMessage').style.display = 'block';
+            console.log(error);
+        });
     }
+
     function response_received(content) {
-        const paquetes = content.paquetes_turisticos
-        const opciones = document.getElementById("paquetes_disponibles")
+        const paquetes = content.paquetes_turisticos;
+        const opciones = document.getElementById("paquetes_disponibles");
         for (let i = 0; i < paquetes.length; i++) {
             const paquete = paquetes[i];
-            const opcion = document.createElement("option")
-            console.log(paquete.id)
-            opcion.setAttribute("value", paquete.id)
-            opcion.innerText = `${paquete.name} - ${paquete.destino}`
-            opciones.append(opcion)
+            const opcion = document.createElement("option");
+            opcion.setAttribute("value", paquete.id);
+            opcion.innerText = `${paquete.name} - ${paquete.destino}`;
+            opciones.append(opcion);
         }
     }
+
     fetch("http://127.0.0.1:5433/paquetes_turisticos/")
-        .then((res)=>res.json())
+        .then(res => res.json())
         .then(response_received)
-        .catch((error)=>console.log(error))
+        .catch(error => console.log(error));
 
     function handle_get_response(content) {
-        data = content.user
-        document.getElementById("name").value = data.username
+        const data = content.user;
+        document.getElementById("name").value = data.username;
     }
+
     fetch(`http://127.0.0.1:5433/auth/${id}`)
-        .then((response)=>response.json())
+        .then(response => response.json())
         .then(handle_get_response)
-        .catch((error)=>console.log("Error", error))
+        .catch(error => console.log("Error", error));
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
