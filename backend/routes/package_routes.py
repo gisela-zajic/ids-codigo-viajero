@@ -6,6 +6,7 @@ from backend.database.configs.database import db
 
 paquetes_turisticos_bp = Blueprint('paquetes_turisticos', __name__)
 
+
 # ruta para obtener los paquetes turísticos de un destino específico
 @paquetes_turisticos_bp.route('/destino/<int:id_destino>/')
 def get_paquetes_turisticos_by_destino(id_destino):
@@ -31,13 +32,13 @@ def get_paquetes_turisticos_by_destino(id_destino):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+
 # ruta para crear un nuevo paquete turístico
 @paquetes_turisticos_bp.route('/', methods=['POST'])
 def create_paquete_turistico():
     try:
         data = request.get_json()
 
-        # valido que se envíen todos los datos necesarios
         if not data or not all(key in data for key in ('destino_id', 'name', 'description', 'price', 'image_url')):
             return jsonify({'message': 'Faltan datos necesarios'}), 400
 
@@ -47,7 +48,6 @@ def create_paquete_turistico():
         price = data['price']
         image_url = data['image_url']
 
-        # valido que los datos sean válidos
         if not name or not description or price <= 0:
             return jsonify(
                 {'message': 'El nombre, la descripción y el precio son obligatorios y deben ser válidos'}), 400
