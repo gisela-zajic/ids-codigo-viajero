@@ -27,7 +27,6 @@
             <p>Puedes cambiarlos cuando quieras</p>
             <div class="row g-4 mb-4" id="datos">
                 <form onsubmit="edit_user(event)">
-                <!--<form id="userForm">-->
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre Completo</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" required>
@@ -53,10 +52,10 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Rating</th>
-                    <th scope="col">Comentario</th>
-                    <th scope="col">Acciones</th>
+                      <th scope="col" class="col-1">Id</th>
+                      <th scope="col" class="col-rating">Rating</th>
+                      <th scope="col" class="col-comment">Comentario</th>
+                      <th scope="col" class="col-2">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="resenias">
