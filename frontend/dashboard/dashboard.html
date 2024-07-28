@@ -8,7 +8,7 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="dashboard_estilos.css">
 </head>
 <body>
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
@@ -81,8 +81,9 @@
                 <tbody id="reservas">
                 </tbody>
             </table>
-            <!--<button class="btn btn-info col-12" id="newReservationBtn">Nueva Reserva</button>-->
-            <button class="btn btn-info col-12" onclick="nueva_reserva()"> Nueva Reserva </button>
+            <div class="text-center custom-margin-top">
+                <button class="btn btn-info col-4" onclick="nueva_reserva()">Nueva Reserva</button>
+            </div>
         </div>
     </section>
     <footer class="container-xxl">
@@ -104,7 +105,6 @@
         const navbar = document.getElementById("navbar")
         navbar.setAttribute("href",`/?id=${id}`)
 
-        // obteniendo datos existentes del usuario
         function handle_get_response(content) {
             if(content.message == 'El usuario no fue encontrado'){
                 window.location.href = "/"
@@ -115,13 +115,11 @@
             document.getElementById("password").value = data.password
 
         }
-        //Si el usuario no existe
         fetch(`http://127.0.0.1:5433/auth/${id}`)
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
 
-        // editando los datos del usuario
         function handle_response(response) {
             alert(response.message)
             window.location.reload()
@@ -148,7 +146,6 @@
                 .catch((error)=>console.log(error))
         }
 
-        //Eliminando el usuario
         function response_delete(response){
             alert(response.message)
             window.location.href = "/"
@@ -165,10 +162,6 @@
                 .catch((error)=>console.log(error))
         }
 
-
-        //Seccion de Reservas del usuario
-
-        //Redireccion para reservar nuevamente
         function nueva_reserva(){
             window.location.href = `/reservas/reservas.html`
             if (id != null){
@@ -176,7 +169,6 @@
             }
         }
 
-        //Cancelar - Eliminar Reservas
         function response_reserva_delete(data){
             alert(data.message)
             window.location.reload()
@@ -195,7 +187,6 @@
         }
 
 
-        //Listado de reservas
         function handle_reservation(data) {
             const reservas = data.reservas
             const tbody = document.getElementById("reservas")
@@ -239,14 +230,10 @@
             .then(handle_reservation)
             .catch((error)=>console.log("Error", error))
 
-        //Seccion de comentarios
-
-        //Editar un comentario
         function edit_resernia(id_resenia){
             window.location.href = `/resenias/edit/?id=${id}&id_r=${id_resenia}`
         }
 
-        //Eliminar un comentario
         function response_resenia_delete(response){
             alert(response.message)
             window.location.reload()
@@ -264,7 +251,6 @@
                 .catch((error)=>console.log(error))
         }
 
-        //Listando todos los comentarios del usuario
         function handle_response_comment(content){
             const resenias = content.resenias
             const tbody = document.getElementById("resenias")

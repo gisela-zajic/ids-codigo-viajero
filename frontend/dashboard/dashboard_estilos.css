@@ -101,6 +101,10 @@ form .btn {
     margin-right: 5px;
 }
 
+.custom-margin-top {
+    margin-top: 2.2rem;
+}
+
 footer {
     background-color: #d1f7fc;
     color: white;
