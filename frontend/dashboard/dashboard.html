@@ -173,7 +173,7 @@
             window.location.reload()
         }
 
-        function canselar_reserva(id){
+        function cancelar_reserva(id){
             const confirmacion = confirm(`¿Esta seguro de eliminar la reserva ${id}`)
             if(!confirmacion){
                 return
@@ -215,7 +215,7 @@
                 const btn_remove = document.createElement("button")
                 btn_remove.setAttribute("type","button")
                 btn_remove.setAttribute("class","btn btn-outline-danger")
-                btn_remove.setAttribute("onclick",`canselar_reserva(${reservas[i].id})`)
+                btn_remove.setAttribute("onclick",`cancelar_reserva(${reservas[i].id})`)
 
                 btn_remove.innerText = "Cancelar"
                 tr.append(btn_remove)
