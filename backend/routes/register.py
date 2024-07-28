@@ -7,10 +7,8 @@ from backend.routes.review_routes import resenias_bp
 
 
 def register_routes(app):
-    # creo el blueprint principal
     main_bp = Blueprint('main', __name__)
 
-    # registro blueprints individuales en el blueprint principal
     main_bp.register_blueprint(auth_bp, url_prefix='/auth')
     main_bp.register_blueprint(destinos_bp, url_prefix='/destinos')
     main_bp.register_blueprint(paquetes_turisticos_bp, url_prefix='/paquetes_turisticos')
