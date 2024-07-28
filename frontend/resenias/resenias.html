@@ -23,7 +23,7 @@
     </header>
     <div class="container mt-4">
         <div class="row">
-            <div class="com-12 col-ms-10 col-lg-6 mx-auto">
+            <div class="col-12 col-md-10 col-lg-6 mx-auto">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title">Comentario</h1>
@@ -33,29 +33,28 @@
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" required>
                             </div>
 
-                            <select class="form-select" name="package" aria-label="Default select example" id="paquetes_disponibles">
-                                <option selected>Selecciona un paquete</option>
+                            <select class="form-select mb-3" name="package" aria-label="Default select example" id="paquetes_disponibles" required>
+                                <option value="" selected disabled>Selecciona un paquete</option>
                             </select>
 
-                            <div class="mb-0">
-                                <label for="rating" class="form-label"> Puntaje </label>
-                                <p class="clasificacion">
-                                    <input id="radio1" type="radio" name="rating" value="5"><!--
-                                    --><label id="rating" for="radio1">★</label><!--
-                                    --><input id="radio2" type="radio" name="rating" value="4"><!--
-                                    --><label id="rating" for="radio2">★</label><!--
-                                    --><input id="radio3" type="radio" name="rating" value="3"><!--
-                                    --><label id="rating" for="radio3">★</label><!--
-                                    --><input id="radio4" type="radio" name="rating" value="2"><!--
-                                    --><label id="rating" for="radio4">★</label><!--
-                                    --><input id="radio5" type="radio" name="rating" value="1"><!--
-                                    --><label id="rating" for="radio5">★</label>
+                            <div class="mb-0 d-flex align-items-center">
+                                <label for="rating" class="form-label me-2">Puntaje</label>
+                                <p class="clasificacion m-0">
+                                    <input id="radio1" type="radio" name="rating" value="5" required><!--
+                                    --><label for="radio1">★</label><!--
+                                    --><input id="radio2" type="radio" name="rating" value="4" required><!--
+                                    --><label for="radio2">★</label><!--
+                                    --><input id="radio3" type="radio" name="rating" value="3" required><!--
+                                    --><label for="radio3">★</label><!--
+                                    --><input id="radio4" type="radio" name="rating" value="2" required><!--
+                                    --><label for="radio4">★</label><!--
+                                    --><input id="radio5" type="radio" name="rating" value="1" required><!--
+                                    --><label for="radio5">★</label>
                                 </p>
                             </div>
 
-
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" placeholder="Comentario" name="comment" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <textarea class="form-control" placeholder="Comentario" name="comment" id="floatingTextarea2" style="height: 100px" required></textarea>
                                 <label for="floatingTextarea2">Comentario</label>
                             </div>
                             <button type="submit" class="btn btn-success">Continuar</button>
@@ -100,13 +99,11 @@
                 paquete_id: package_id,
                 comment: comment,
                 rating:rating
-
             })
             })
             .then((res)=>res.json())
             .then(handle_response)
             .catch((error)=>console.log(error))
-
         }
         function response_received(content) {
             const paquetes = content.paquetes_turisticos
