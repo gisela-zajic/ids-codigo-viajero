@@ -26,12 +26,10 @@ def create_reserva():
         if not paquete_id or not user_id:
             return jsonify({'message': 'El paquete_id y el user_id son obligatorios'}), 400
 
-        # verifico la existencia del paquete turístico
         paquete = PaquetesTuristicos.query.get(paquete_id)
         if not paquete:
             return jsonify({'message': 'El paquete turístico elegido no existe'}), 404
 
-        # verifico la existencia de usuario
         usuario = Usuarios.query.get(user_id)
         if not usuario:
             return jsonify({'message': 'El usuario elegido no existe'}), 404
@@ -113,14 +111,15 @@ def get_reservas():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-#ruta para obtener todas las reservas de un usuario
+
+# ruta para obtener todas las reservas de un usuario
 @reservas_bp.route('/user/<int:id_user>', methods=['GET'])
 def get_reservas_user(id_user):
     try:
-        reservas = db.session.query(Reservas,PaquetesTuristicos.name, PaquetesTuristicos.price, Destinos.name
+        reservas = db.session.query(Reservas, PaquetesTuristicos.name, PaquetesTuristicos.price, Destinos.name
                                     ).filter(Reservas.user_id == id_user
-                                             ).filter( PaquetesTuristicos.id == Reservas.paquete_id
-                                             ).filter( Destinos.id == PaquetesTuristicos.destino_id).all()
+                                             ).filter(PaquetesTuristicos.id == Reservas.paquete_id
+                                                      ).filter(Destinos.id == PaquetesTuristicos.destino_id).all()
         reservas_data = []
         for reserva in reservas:
             reserva_data = {
@@ -129,7 +128,7 @@ def get_reservas_user(id_user):
                 'status': reserva[0].status,
                 'paquete': reserva[1],
                 'destino': reserva[3],
-                'price': reserva[2] 
+                'price': reserva[2]
             }
             reservas_data.append(reserva_data)
         return jsonify({'reservas': reservas_data})
