@@ -15,6 +15,10 @@ header .navbar-brand {
     color: white;
 }
 
+.navbar-brand span {
+    font-weight: bold;
+}
+
 header .navbar-nav .nav-link {
     font-size: 1.2rem;
     margin-right: 15px;
