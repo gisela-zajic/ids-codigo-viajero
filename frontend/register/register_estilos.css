@@ -1,0 +1,76 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e5f4f6;
+}
+
+header {
+    background-color: #17a2b8;
+    color: #ffffff;
+    padding: 1rem;
+}
+
+header .navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+header .navbar-brand span {
+    font-weight: bold;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.card-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #17a2b8;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+input.form-control {
+    border-radius: 0.375rem;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    width: 100%;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.container.mt-4 {
+    margin-top: 2rem;
+}
+
+.alert-custom {
+    display: none;
+    margin-top: 20px;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.alert {
+    margin-top: 1rem;
+    display: none;
+}

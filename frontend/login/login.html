@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código Viajero - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="login_estilos.css">
+</head>
+<body>
+    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <span class="text-light h1">Código Viajero</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-4" style="height: 100vh;">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-6">
+                <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body">
+                        <h1 class="card-title">Ingresa</h1>
+                        <form onsubmit="ingreso(event)">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico: </label>
+                                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contraseña" class="form-label">Contraseña: </label>
+                                <input type="password" class="form-control" name="password" id="contraseña" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Continuar</button>
+                        </form>
+                        <div class="alert alert-success alert-custom" id="loginSuccessMessage">
+                            ¡Bienvenido, has iniciado sesión correctamente!
+                        </div>
+                        <div class="alert alert-danger alert-custom" id="loginErrorMessage">
+                            Credenciales incorrectas. Inténtalo de nuevo.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function data_received(data) {
+            if (typeof(data.user_id) == "number") {
+                document.getElementById('loginSuccessMessage').style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = `http://localhost:8080/?id=${data.user_id}`;
+                }, 2000);
+            } else {
+                document.getElementById('loginErrorMessage').style.display = 'block';
+            }
+        }
+
+        function ingreso(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get("email");
+            const password = formData.get("password");
+
+            fetch("http://127.0.0.1:5433/auth/login", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+            .then((res) => res.json())
+            .then(data_received)
+            .catch((error) => console.log(error));
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+</html>
