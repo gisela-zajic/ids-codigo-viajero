@@ -73,6 +73,26 @@ def get_user(id):
         return jsonify({'message': 'Internal server error'}), 500
 
 
+# ruta para obtener todos los usuarios
+@auth_bp.route('/', methods=['GET'])
+def get_all_users():
+    try:
+        usuarios = Usuarios.query.all()
+        usuarios_data = []
+        for usuario in usuarios:
+            usuario_data = {
+                'id': usuario.id,
+                'username': usuario.username,
+                'email': usuario.email,
+                'created_at': usuario.created_at
+            }
+            usuarios_data.append(usuario_data)
+        return jsonify({'users': usuarios_data})
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 # ruta para actualizar la información del usuario
 @auth_bp.route('/<int:id>', methods=['PUT'])
 def update_user(id):
