@@ -8,10 +8,9 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/reviews_styles.css" />
+    <link rel="stylesheet" href="../resenias_estilos.css">
 </head>
 <body>
-    <!-- Encabezado de todas las páginas -->
     <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid">
@@ -87,12 +86,10 @@
 
         const dash = document.getElementById("dash")
         dash.setAttribute("href",`/dashboard/dashboard.html?id=${id}`)
-
         function handle_response(data){
             alert(data.message)
             window.location.href = `/dashboard/dashboard.html?id=${id}`
         }
-
         function edit_comment(event){
             event.preventDefault()
             const formData = new FormData(event.target)
@@ -121,9 +118,7 @@
             .catch((error)=>console.log(error))
 
         }
-
-// Obtengo los datos anteriores del comentario
-function handle_response_received(data) {
+        function handle_response_received(data) {
 
             console.log(data)
 
@@ -131,13 +126,11 @@ function handle_response_received(data) {
             document.getElementById("radio" + data.rating).checked = true
             document.getElementById("comment").value =  data.comment
         }
-
-fetch(`http://127.0.0.1:5433/resenias/${id_r}`)
+        fetch(`http://127.0.0.1:5433/resenias/${id_r}`)
             .then((response)=>response.json())
             .then(handle_response_received)
             .catch((error)=>console.log("Error", error))
 
-//Obtengo todos los paquetes para que el usuario elija cual
         function response_received(content) {
             const paquetes = content.paquetes_turisticos
             const opciones = document.getElementById("paquetes_disponibles")
@@ -153,8 +146,6 @@ fetch(`http://127.0.0.1:5433/resenias/${id_r}`)
             .then((res)=>res.json())
             .then(response_received)
             .catch((error)=>console.log(error))
-
-//Obtengo todos los datos del usuario
         function handle_get_response(content) {
             data = content.user
             document.getElementById("name").value = data.username
@@ -163,8 +154,6 @@ fetch(`http://127.0.0.1:5433/resenias/${id_r}`)
             .then((response)=>response.json())
             .then(handle_get_response)
             .catch((error)=>console.log("Error", error))
-
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
