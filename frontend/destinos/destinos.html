@@ -167,6 +167,16 @@
         //Muestra las reseñas
         function handle_response_data(content) {
             const box = document.getElementById("comment")
+            const opinionCard = document.querySelector('.card-opinion');
+
+            if (content.length === 0 ) {
+                opinionCard.style.display = 'none';
+                return;
+            }
+
+            opinionCard.style.display = 'block';
+            box.innerHTML = '';
+
             for (let i = 0; i <  content.length; i++) {
                 resenia = content[i]
 
