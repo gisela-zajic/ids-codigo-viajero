@@ -14,7 +14,7 @@ Aplicación web de viajes y turismo que permite a los usuarios explorar destinos
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install flask
+pip install Flask Flask-SQLAlchemy psycopg2 Flask-Migrate
 ```
 
 ## Run
