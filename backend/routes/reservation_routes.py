@@ -53,15 +53,15 @@ def create_reserva():
 @reservas_bp.route('/<int:id>', methods=['GET'])
 def get_reserva(id):
     try:
-        reserva = Reservas.query.get(id)
+        reserva = db.session.query(Reservas,Usuarios.username).join(Usuarios, Usuarios.id == Reservas.user_id).filter(Reservas.id == id).all()
         if reserva is None:
             return jsonify({'message': 'La reserva no fue encontrada'}), 404
         reserva_data = {
-            'id': reserva.id,
-            'created_at': reserva.created_at,
-            'status': reserva.status,
-            'paquete_id': reserva.paquete_id,
-            'user_id': reserva.user_id,
+            'id': reserva[0][0].id,
+            'created_at': reserva[0][0].created_at,
+            'status': reserva[0][0].status,
+            'paquete_id': reserva[0][0].paquete_id,
+            'user': reserva[0][1],
         }
         return jsonify(reserva_data)
     except Exception as error:
@@ -84,7 +84,7 @@ def update_reserva(id):
         reserva.user_id = data.get('user_id', reserva.user_id)
 
         db.session.commit()
-        return jsonify({'message': 'Reserva actualizada correctamente'}), 200
+        return jsonify({'message': 'Reserva actualizada correctamente', 'reserva': reserva.id}), 200
     except Exception as error:
         print('Error', error)
         db.session.rollback()
