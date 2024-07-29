@@ -79,6 +79,7 @@
                     <th scope="col">Paquete</th>
                     <th scope="col">Destino</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Importe</th>
                     <th scope="col">Realizada el</th>
                     <th scope="col">Acciones</th>
                   </tr>
@@ -216,6 +217,10 @@
                 const estado = document.createElement("td")
                 estado.innerText = reservas[i].status
                 tr.append(estado)
+
+                const precio = document.createElement("td")
+                precio.innerText = "$ " + reservas[i].price
+                tr.append(precio)
 
                 const fecha_creacion = document.createElement("td")
                 fecha_creacion.innerText = reservas[i].created_at
