@@ -5,7 +5,21 @@ Aplicación web de viajes y turismo que permite a los usuarios explorar destinos
 
 
 ### Integrantes:
-#### - Guerrero Lara, Steve Antonio Jose
-#### - Hasi, Keren Cesia 
-#### - Zajic, Gisela Daiana
+#### - Guerrero Lara, Steve Antonio Jose - 110067
+#### - Hasi, Keren Cesia - 110218
+#### - Zajic, Gisela Daiana - 108735
 
+## Install
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install Flask Flask-SQLAlchemy psycopg2 Flask-Migrate
+```
+
+## Run
+
+```bash
+chmod +x run.sh
+./run.sh
+```

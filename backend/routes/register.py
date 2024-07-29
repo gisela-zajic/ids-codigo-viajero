@@ -1,0 +1,20 @@
+from flask import Blueprint
+from backend.routes.auth_routes import auth_bp
+from backend.routes.destination_routes import destinos_bp
+from backend.routes.package_routes import paquetes_turisticos_bp
+from backend.routes.reservation_routes import reservas_bp
+from backend.routes.review_routes import resenias_bp
+
+
+def register_routes(app):
+    main_bp = Blueprint('main', __name__)
+
+    main_bp.register_blueprint(auth_bp, url_prefix='/auth')
+    main_bp.register_blueprint(destinos_bp, url_prefix='/destinos')
+    main_bp.register_blueprint(paquetes_turisticos_bp, url_prefix='/paquetes_turisticos')
+    main_bp.register_blueprint(reservas_bp, url_prefix='/reservas')
+    main_bp.register_blueprint(resenias_bp, url_prefix='/resenias')
+
+    app.register_blueprint(main_bp)
+
+    return app

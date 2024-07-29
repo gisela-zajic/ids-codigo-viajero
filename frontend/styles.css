@@ -1,0 +1,75 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e5f4f6;
+}
+
+.navbar-brand span {
+    font-weight: bold;
+}
+
+.btn-outline-light {
+    border-color: #fff;
+}
+
+.carousel-inner img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.section-header {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 2px solid #17a2b8;
+    background-color: #cfe9f1;
+    box-shadow: 0 4px 8px rgba(9, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.section-header h2.h3 {
+    font-size: 1.5rem;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+footer {
+    background-color: #d1f7fc;
+    color: #1f0000;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
+footer .footer-main-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+footer .footer-secondary-text {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+footer a {
+    color: #1e3ebd;
+}
+
+.card {
+    margin: auto;
+}

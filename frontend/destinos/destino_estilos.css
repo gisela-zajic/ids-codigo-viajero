@@ -1,0 +1,264 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e5f4f6;
+}
+
+header {
+    background-color: #17a2b8;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+}
+
+header .navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-brand span {
+    font-weight: bold;
+}
+
+header .navbar-nav .nav-link {
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+header .btn-outline-light {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+header .btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #17a2b8;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.card img {
+    object-fit: cover;
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card-body h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 auto 10px;
+    background-color: #ebf2f3;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.card-body p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+.card-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 0;
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
+    background-color: #edf5f6;
+}
+
+.card-footer h4 {
+    margin: 0;
+    color: #17a2b8;
+}
+
+.card-footer-comment {
+    background-color: #0b5d67;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px 6px 6px 6px;
+}
+
+#paquetes {
+    margin-top: 30px;
+}
+
+#paquetes .card {
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+#paquetes .card .img-top {
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+}
+
+#paquetes .card .card-img-container {
+    position: relative;
+}
+
+#paquetes .card .card-img-container::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #17a2b8;
+    margin-top: 10px;
+}
+
+#paquetes .card .card-text {
+    margin-top: 10px;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+#paquetes .card .btn-warning {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+#paquetes .card .btn-warning:hover {
+    background-color: #ffcc00;
+}
+
+#paquetes .card .text-center.fw-bold.h3 {
+    margin-top: 20px;
+}
+
+.gradient-custom {
+    background: linear-gradient(40deg, #45cafc, #303f9f);
+    color: white;
+}
+
+.gradient-custom .card {
+    background-color: transparent;
+    border: none;
+}
+
+.gradient-custom .card-body {
+    padding: 20px;
+}
+
+.gradient-custom .card-footer {
+    border-top: none;
+    padding: 20px;
+}
+
+.gradient-custom .btn-info {
+    background-color: #17a2b8;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.gradient-custom .btn-info:hover {
+    background-color: #138496;
+}
+
+.gradient-custom .btn-transparent {
+    background-color: #17a2b8;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+.gradient-custom .btn-transparent:hover {
+    background-color: #138496;
+    border: 2px solid transparent;
+}
+
+#comment .card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+#comment .card .card-body {
+    padding: 0;
+}
+
+#comment .card .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#comment .card .card-head .fw-bold {
+    font-size: 1.2rem;
+}
+
+#comment .card .card-head .small {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+#comment .card .card-head .h4 {
+    color: #ffc107;
+    margin: 0;
+}
+
+#comment .card .card-text {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#comment .card .fw-bold.h5 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+#estrella {
+    color: #ffc107;
+}
+
+#paquetes .card-body {
+    padding: 20px;
+    background-color: #f5f8f8;
+}
+
+#paquetes h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.opiniones-titulo {
+    font-weight: bold;
+}
+
+.card-opinion{
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #3a8dad;
+}

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código Viajero - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="dashboard_estilos.css">
+</head>
+<body>
+    <header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <a class="navbar-brand" id="navbar"><span class="text-light h1">Código Viajero</span></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+        </nav>
+    </header>
+    <section class="container">
+        <div class="data-personal-box p-4">
+            <h2 class="h3">Datos personales</h2>
+            <p>Puedes cambiarlos cuando quieras</p>
+            <div class="row g-4 mb-4" id="datos">
+                <form onsubmit="edit_user(event)">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Ej: xxxxxx@gmail.com" aria-describedby="emailHelp" required>
+                        <div class="form-text">No compartiremos tu correo con nadie.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-warning col-2">Editar</button>
+                            <button class="btn btn-danger col-2" onclick="remove_user()" id="remove_button"> Remover </button>
+                            <a class="btn btn-primary float-end col-2" href="/">Cerrar Sesión</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="container mb-4">
+        <div class="data-personal-box p-4">
+            <h2>Mis Reseñas</h2>
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th scope="col" class="col-1">Id</th>
+                      <th scope="col" class="col-rating">Rating</th>
+                      <th scope="col" class="col-comment">Comentario</th>
+                      <th scope="col" class="col-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="resenias">
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="container mb-4">
+        <div class="data-personal-box p-4">
+            <h2>Mis Reservas</h2>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Paquete</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Realizada el</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="reservas">
+                </tbody>
+            </table>
+            <div class="text-center custom-margin-top">
+                <button class="btn btn-info col-4" onclick="nueva_reserva()">Nueva Reserva</button>
+            </div>
+        </div>
+    </section>
+    <footer class="container-xxl">
+        <p class="footer-main-text">Todos los derechos reservados</p>
+        <p class="footer-secondary-text">
+            Defensa al consumidor, para reclamos ingrese
+            <a href="https://www.argentina.gob.ar/economia/industria-y-comercio/defensadelconsumidor">Aquí</a>
+        </p>
+    </footer>
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search)
+        const id = params.get("id")
+        if (id === null){
+            window.location.href = "/"
+        }
+
+        const navbar = document.getElementById("navbar")
+        navbar.setAttribute("href",`/?id=${id}`)
+
+        function handle_get_response(content) {
+            if(content.message == 'El usuario no fue encontrado'){
+                window.location.href = "/"
+            }
+            data = content.user
+            document.getElementById("name").value = data.username
+            document.getElementById("email").value = data.email
+            document.getElementById("password").value = data.password
+
+        }
+        fetch(`http://127.0.0.1:5433/auth/${id}`)
+            .then((response)=>response.json())
+            .then(handle_get_response)
+            .catch((error)=>console.log("Error", error))
+
+        function handle_response(response) {
+            alert(response.message)
+            window.location.reload()
+        }
+        function edit_user(event) {
+            event.preventDefault()
+            const formData = new FormData(event.target)
+            const name = formData.get("name")
+            const email = formData.get("email")
+            const password = formData.get("password")
+
+            fetch(`http://127.0.0.1:5433/auth/${id}`, {
+            method: "PUT",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                email: email,
+                password: password
+            })
+            })
+                .then((res)=>res.json())
+                .then(handle_response)
+                .catch((error)=>console.log(error))
+        }
+
+        function response_delete(response){
+            alert(response.message)
+            window.location.href = "/"
+        }
+
+        function remove_user() {
+            const sure = confirm(`¿Estas seguro de eliminar tu cuenta?`)
+            if(!sure){
+                return;
+            }
+            fetch(`http://127.0.0.1:5433/auth/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_delete)
+                .catch((error)=>console.log(error))
+        }
+
+        function nueva_reserva(){
+            window.location.href = `/reservas/reservas.html`
+            if (id != null){
+                window.location.href = `/reservas/reservas.html?id=${id}`
+            }
+        }
+
+        function response_reserva_delete(data){
+            alert(data.message)
+            window.location.reload()
+        }
+
+        function cancelar_reserva(id){
+            const confirmacion = confirm(`¿Esta seguro de eliminar la reserva ${id}`)
+            if(!confirmacion){
+                return
+            }
+
+            fetch(`http://127.0.0.1:5433/reservas/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_reserva_delete)
+                .catch((error)=>console.log(error))
+        }
+
+        function edit_reserva(id_reserva) {
+            window.location.href = `/reservas/edit/edit.html?id=${id_reserva}&id_u=${id}`
+        }
+
+        function handle_reservation(data) {
+            const reservas = data.reservas
+            const tbody = document.getElementById("reservas")
+            for (let i = 0; i < reservas.length; i++) {
+                const tr = document.createElement("tr")
+                const id = document.createElement("th")
+                id.setAttribute("scope","row")
+                id.innerText = reservas[i].id
+                tr.append(id)
+
+                const package = document.createElement("td")
+                package.innerText = reservas[i].paquete
+                tr.append(package)
+
+                const destino = document.createElement("td")
+                destino.innerText = reservas[i].destino
+                tr.append(destino)
+
+                const estado = document.createElement("td")
+                estado.innerText = reservas[i].status
+                tr.append(estado)
+
+                const precio = document.createElement("td")
+                precio.innerText = "$ " + reservas[i].price
+                tr.append(precio)
+
+                const fecha_creacion = document.createElement("td")
+                fecha_creacion.innerText = reservas[i].created_at
+                tr.append(fecha_creacion)
+
+                const btn_remove = document.createElement("button")
+                btn_remove.setAttribute("type","button")
+                btn_remove.setAttribute("class","btn btn-outline-danger")
+                btn_remove.setAttribute("onclick",`cancelar_reserva(${reservas[i].id})`)
+
+                const btn_edit = document.createElement("button")
+                btn_edit.setAttribute("type","button")
+                btn_edit.setAttribute("class","btn btn-outline-warning mx-1")
+                btn_edit.setAttribute("onclick",`edit_reserva(${reservas[i].id})`)
+                btn_edit.innerText = "Editar"
+                tr.append(btn_edit)
+
+                btn_remove.innerText = "Cancelar"
+                tr.append(btn_remove)
+
+                tbody.append(tr)
+            }
+
+        }
+        fetch(`http://127.0.0.1:5433/reservas/user/${id}`)
+            .then((response)=>response.json())
+            .then(handle_reservation)
+            .catch((error)=>console.log("Error", error))
+
+        function edit_resernia(id_resenia){
+            window.location.href = `/resenias/edit/?id=${id}&id_r=${id_resenia}`
+        }
+
+        function response_resenia_delete(response){
+            alert(response.message)
+            window.location.reload()
+        }
+
+        function eliminar_resenia(id){
+            const confirmacion = confirm(`Está seguro de eliminar la reseña ${id}`)
+            if(!confirmacion){
+                return
+            }
+
+            fetch(`http://127.0.0.1:5433/resenias/${id}`, {method: "DELETE"})
+                .then((res)=>res.json())
+                .then(response_resenia_delete)
+                .catch((error)=>console.log(error))
+        }
+
+        function handle_response_comment(content){
+            const resenias = content.resenias
+            const tbody = document.getElementById("resenias")
+
+            for (let i = 0; i < resenias.length; i++) {
+                const tr = document.createElement("tr")
+                const id = document.createElement("th")
+                id.setAttribute("scope","row")
+                id.innerText = resenias[i].id
+                tr.append(id)
+
+                const rating_cell = document.createElement("td")
+                const rating = document.createElement("p")
+                rating.setAttribute("class"," fw-bold ")
+                for (let j = 0; j < (resenias[i].rating); j++){
+                    rating.innerHTML += "<label id='estrella' class='h4'>★</label>"
+                }
+                rating_cell.append(rating)
+                tr.append(rating_cell)
+
+                const comment = document.createElement("td")
+                comment.innerText = resenias[i].comment
+                tr.append(comment)
+
+
+                const btn_remove = document.createElement("button")
+                btn_remove.setAttribute("type","button")
+                btn_remove.setAttribute("class","btn btn-outline-danger mx-1")
+                btn_remove.setAttribute("onclick",`eliminar_resenia(${resenias[i].id})`)
+                btn_remove.innerText = "Eliminar"
+                tr.append(btn_remove)
+
+
+                const btn_edit = document.createElement("button")
+                btn_edit.setAttribute("type","button")
+                btn_edit.setAttribute("class","btn btn-outline-warning mx-1")
+                btn_edit.setAttribute("onclick",`edit_resernia(${resenias[i].id})`)
+                btn_edit.innerText = "Editar"
+                tr.append(btn_edit)
+
+                tbody.append(tr)
+            }
+        }
+        fetch(`http://127.0.0.1:5433/resenias/user/${id}`)
+            .then((response)=>response.json())
+            .then(handle_response_comment)
+            .catch((error)=>console.log("Error", error))
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
