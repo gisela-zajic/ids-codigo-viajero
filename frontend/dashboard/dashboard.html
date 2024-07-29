@@ -40,8 +40,14 @@
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña" required>
                     </div>
-                    <button type="submit" class="btn btn-warning col-2">Editar</button>
-                    <button class="btn btn-danger col-2" onclick="remove_user()" id="remove_button"> Remover </button>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-warning col-2">Editar</button>
+                            <button class="btn btn-danger col-2" onclick="remove_user()" id="remove_button"> Remover </button>
+                            <a class="btn btn-primary float-end col-2" href="/">Cerrar Sesión</a>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -185,6 +191,9 @@
                 .catch((error)=>console.log(error))
         }
 
+        function edit_reserva(id_reserva) {
+            window.location.href = `/reservas/edit/edit.html?id=${id_reserva}&id_u=${id}`
+        }
 
         function handle_reservation(data) {
             const reservas = data.reservas
@@ -216,6 +225,13 @@
                 btn_remove.setAttribute("type","button")
                 btn_remove.setAttribute("class","btn btn-outline-danger")
                 btn_remove.setAttribute("onclick",`cancelar_reserva(${reservas[i].id})`)
+
+                const btn_edit = document.createElement("button")
+                btn_edit.setAttribute("type","button")
+                btn_edit.setAttribute("class","btn btn-outline-warning mx-1")
+                btn_edit.setAttribute("onclick",`edit_reserva(${reservas[i].id})`)
+                btn_edit.innerText = "Editar"
+                tr.append(btn_edit)
 
                 btn_remove.innerText = "Cancelar"
                 tr.append(btn_remove)
