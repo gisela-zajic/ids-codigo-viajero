@@ -60,13 +60,14 @@
     </div>
     <script>
         function handle_response(data){
+            console.log(data)
             if (typeof(data) !== "object" || !("id" in data) || !("message" in data)){
                 throw new Error("La respuesta del servidor no es válida");
             }
 
            document.getElementById('successMessage').style.display = 'block';
             setTimeout(() => {
-                window.location.href = "/";
+                window.location.href = `/dashboard/dashboard.html?id=${data.id}`;
             }, 2000);
         }
 

@@ -56,7 +56,7 @@
             if (typeof(data.user_id) == "number") {
                 document.getElementById('loginSuccessMessage').style.display = 'block';
                 setTimeout(() => {
-                    window.location.href = `http://localhost:8080/?id=${data.user_id}`;
+                    window.location.href = `/dashboard/dashboard.html?id=${data.user_id}`;
                 }, 2000);
             } else {
                 document.getElementById('loginErrorMessage').style.display = 'block';
