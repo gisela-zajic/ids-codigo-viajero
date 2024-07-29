@@ -20,7 +20,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" >
+                            <a class="d-none" id="dash" aria-current="page"><i class="bi bi-person-circle"></i> Mi cuenta</a>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav navbar-right" id="btn">
                         <li class="nav-item m-2">
                             <a href="register/register.html" class="btn btn-outline-light">
@@ -153,6 +157,10 @@
         if (id != null){
             const btn = document.getElementById("btn")
             btn.classList.add("d-none")
+
+            const dash = document.getElementById("dash")
+            dash.setAttribute("href",`/dashboard/dashboard.html?id=${id}`)
+            dash.setAttribute("class","nav-link active text-light fs-3")
         }
 
         function data_received(data){
