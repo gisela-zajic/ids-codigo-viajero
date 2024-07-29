@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código Viajero - Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="reservas_estilos.css">
+</head>
+<body>
+<header class="container-fluid bg-info shadow-sm p-lg-3 mb-2">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" id="navbar"><span class="text-light h1">Código Viajero</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</header>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 col-md-10 col-lg-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Reserva</h1>
+                    <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
+                        El paquete se reservó correctamente.
+                    </div>
+                    <div id="errorMessage" class="alert alert-danger" role="alert" style="display: none;">
+                        Ocurrió un error al intentar reservar el paquete. Inténtalo de nuevo.
+                    </div>
+                    <form onsubmit="edit_reserva(event)" id="reserva">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Ingrese su nombre" required>
+                        </div>
+                        <select class="form-select mb-4" name="package" aria-label="Default select example" id="paquetes_disponibles">
+                            <option selected>Selecciona un paquete</option>
+                        </select>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-success w-100">Continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const id_u = params.get("id_u")
+    if (id === null) {
+        window.location.href = "/";
+    }
+
+    const navbar = document.getElementById("navbar");
+    navbar.setAttribute("href", `/?id=${id}`);
+
+    function handle_response(data) {
+        console.log(data)
+        if (Object.keys(data).length === 2) {
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                window.location.href = `/dashboard/dashboard.html?id=${id}`;
+            }, 2000);
+        } else {
+            document.getElementById('errorMessage').style.display = 'block';
+            console.log(data.message);
+        }
+    }
+
+    function edit_reserva(event){
+        event.preventDefault()
+        const formData = new FormData(event.target)
+        const package_id = formData.get("package")
+
+        fetch(`http://127.0.0.1:5433/reservas/${id}`, {
+        method: "PUT", 
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+            user_id: id_u,
+            paquete_id: package_id
+
+        })
+        })
+        .then((res)=>res.json())
+        .then(handle_response)
+        .catch((error)=>console.log(error))            
+    }
+
+    function data_received(data) {
+            document.getElementById("name").value = data.user
+            document.getElementById("paquetes_disponibles").value = data.paquete_id
+        }
+    fetch(`http://127.0.0.1:5433/reservas/${id}`)
+        .then((res)=>res.json())
+        .then(data_received)
+        .catch((error)=>console.log(error))
+
+    function response_received(content) {
+        const paquetes = content.paquetes_turisticos;
+        const opciones = document.getElementById("paquetes_disponibles");
+        for (let i = 0; i < paquetes.length; i++) {
+            const paquete = paquetes[i];
+            const opcion = document.createElement("option");
+            opcion.setAttribute("value", paquete.id);
+            opcion.innerText = `${paquete.name} - ${paquete.destino}`;
+            opciones.append(opcion);
+        }
+    }
+
+    fetch("http://127.0.0.1:5433/paquetes_turisticos/")
+        .then(res => res.json())
+        .then(response_received)
+        .catch(error => console.log(error));
+
+    function handle_get_response(content) {
+        const data = content.user;
+        document.getElementById("name").value = data.username;
+    }
+
+    fetch(`http://127.0.0.1:5433/auth/${id}`)
+        .then(response => response.json())
+        .then(handle_get_response)
+        .catch(error => console.log("Error", error));
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
