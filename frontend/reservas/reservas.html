@@ -110,7 +110,7 @@
             const paquete = paquetes[i];
             const opcion = document.createElement("option");
             opcion.setAttribute("value", paquete.id);
-            opcion.innerText = `${paquete.name} - ${paquete.destino}`;
+            opcion.innerText = `${paquete.name} - ${paquete.destino}  -  $${paquete.price}`;
             opciones.append(opcion);
         }
     }
